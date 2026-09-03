@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad Jeyajé Arco Iris</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f1ea; color: #3e362e; padding: 20px; display: flex; flex-direction: column; align-items: center; margin: 0; }
+        header { text-align: center; background: #ba3c3c; color: white; padding: 15px; border-radius: 12px; width: 100%; max-width: 480px; box-sizing: border-box; }
+        h1 { margin: 0; font-size: 20px; }
+        header p { margin: 4px 0 0 0; font-size: 12px; opacity: 0.9; }
+        section { background: white; padding: 20px; border-radius: 12px; width: 100%; max-width: 480px; margin-top: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); box-sizing: border-box; }
+        h2 { color: #ba3c3c; font-size: 15px; border-bottom: 2px solid #e6dfd3; padding-bottom: 6px; margin-top: 0; }
+        .campo { margin-bottom: 15px; }
+        label { font-weight: bold; display: block; font-size: 13px; margin-bottom: 4px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #c9c0b3; border-radius: 6px; box-sizing: border-box; background: #faf9f6; font-size: 14px; }
+        .btn { width: 100%; background: #8c6239; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 5px; }
+        .btn:hover { background: #734f2d; }
+        #admin { display: none; width: 100%; max-width: 480px; }
+        #cnt, #cnt-s { background: #e6dfd3; padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; margin-bottom: 15px; }
+        th { background: #ba3c3c; color: white; padding: 8px; text-align: left; }
+        td { padding: 8px; border-bottom: 1px solid #e6dfd3; }
+        .b-wa { background: #25d366; color: white; padding: 4px 6px; border: none; border-radius: 4px; cursor: pointer; }
+        .b-del { background: #ba3c3c; color: white; padding: 4px 6px; border: none; border-radius: 4px; cursor: pointer; margin-left: 4px; }
+        .item-e { display: flex; justify-content: space-between; align-items: center; background: #faf9f6; padding: 6px; margin-top: 5px; border: 1px solid #e6dfd3; border-radius: 4px; font-size: 13px; }
+        .btn-secreto { background: none; border: none; color: #a3998e; font-size: 12px; margin-top: 40px; margin-bottom: 20px; cursor: pointer; text-decoration: underline; }
+        .titulo-seccion-evento { font-weight: bold; color: #ba3c3c; font-size: 13px; margin-top: 15px; margin-bottom: 5px; background: #faf9f6; padding: 6px; border-left: 4px solid #ba3c3c; border-radius: 4px; }
+        .subtitulo-categoria { font-weight: bold; color: #8c6239; font-size: 12px; margin-top: 10px; text-transform: uppercase; }
+        .pestañas { display: flex; gap: 5px; margin-top: 15px; width: 100%; max-width: 480px; }
+        .tab { flex: 1; padding: 10px; background: #c9c0b3; text-align: center; font-weight: bold; font-size: 13px; cursor: pointer; border-radius: 6px 6px 0 0; border: none; color: #3e362e; }
+        .tab.active { background: white; color: #ba3c3c; border-bottom: 3px solid #ba3c3c; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Comunidad Holística Jeyajé Arco Iris</h1>
+        <p>Formulario Oficial de Inscripción</p>
+    </header>
+
+    <!-- PESTAÑAS PÚBLICAS PARA SELECCIONAR FORMULARIO -->
+    <div class="pestañas">
+        <button class="tab active" id="tab-p" onclick="cambiarForm('participante')">Asistente</button>
+        <button class="tab" id="tab-s" onclick="cambiarForm('sahumador')">Staff / Sahumador</button>
+    </div>
+
+    <main style="width:100%; max-width:480px; display:flex; flex-direction:column; align-items:center;">
+        
+        <!-- VISTA DE INSCRIPCIÓN PARTICIPANTES (PÚBLICA) -->
+        <section id="vista-form">
+            <h2>Inscripción a la Ceremonia</h2>
+            <form id="form-reg">
+                <div class="campo"><label>Nombre Completo:</label><input type="text" id="n" required></div>
+                <div class="campo"><label>Número de WhatsApp (con prefijo, ej: 59170000000):</label><input type="tel" id="w" placeholder="Ej. 59170000000" required></div>
+                <div class="campo"><label>Invitado por:</label><input type="text" id="i" required></div>
+                <div class="campo">
+                    <label>Categoría de Participante:</label>
+                    <select id="cat-p" required>
+                        <option value="">-- Selecciona una categoría --</option>
+                        <option value="Invitado (Nuevo)">Invitado (Nuevo)</option>
+                        <option value="Miembro de la Comunidad">Miembro de la Comunidad Jeyajé</option>
+                    </select>
+                </div>
+                <div class="campo"><label>Selecciona tu Ceremonia:</label><select id="e" required></select></div>
+                <button type="submit" class="btn">Confirmar Mi Asistencia ✨</button>
+            </form>
+        </section>
+
+        <!-- VISTA DE INSCRIPCIÓN STAFF / SAHUMADORES (PÚBLICA) -->
+        <section id="vista-form-staff" style="display: none;">
+            <h2>Inscripción de Staff y Sahumadores</h2>
+            <form id="form-staff">
+                <div class="campo"><label>Nombre Completo:</label><input type="text" id="ns" required></div>
+                <div class="campo"><label>Número de WhatsApp (con prefijo, ej: 59170000000):</label><input type="tel" id="ws" placeholder="Ej. 59170000000" required></div>
+                <div class="campo">
+                    <label>Categoría de Sahumador:</label>
+                    <select id="cat-s" required>
+                        <option value="">-- Selecciona una categoría --</option>
+                        <option value="Tribu de Sahumadores">Tribu de Sahumadores Jeyajé - Arco Iris</option>
+                        <option value="Pájaro Solitario">Pájaro Solitario (No miembro de la Tribu)</option>
+                    </select>
+                </div>
+                <div class="campo"><label>Selecciona la Ceremonia a Asistir:</label><select id="es" required></select></div>
+                <button type="submit" class="btn" style="background: #ba3c3c;">Registrarme como Staff / Sahumador 🔥</button>
+            </form>
+        </section>
+
+        <!-- PANEL DE ADMINISTRACIÓN (OCULTO) -->
+        <div id="admin">
+            <section>
+                <h2>⚙️ Configuración de Ceremonias</h2>
+                <div class="campo"><label>Agregar nuevo evento:</label><input type="text" id="new-e" placeholder="Ej. Ceremonia Octubre"></div>
+                <button type="button" class="btn" onclick="addE()">✨ Guardar Evento Nuevo</button>
+                <div id="list-e" style="margin-top:15px;"></div>
+            </section>
+
+            <section>
+                <h2>📊 Panel de Control (Asistentes y Staff)</h2>
+                <div id="cnt">Total Participantes: <span id="tot">0</span></div>
+                <div id="cnt-s" style="background:#ba3c3c; color:white;">Total Staff/Sahumadores: <span id="tots">0</span></div>
+                
+                <button type="button" class="btn" style="background:#8c6239; margin-bottom:15px;" onclick="copiarListaCompleta()">📋 Copiar Reporte General para WhatsApp</button>   
+                
+                <div id="listas-separadas-eventos"></div>
+            </section>
+        </div>
+
+        <button class="btn-secreto" onclick="login()">Acceso Encargado</button>
+    </main>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpiJ6xBLTamw6zA5elKsSPHTAT0Oyj5cenAPfxTPeFliS8UvhXxAHlC_GWDS6LWFhwlw/exec";
+
+        const formP = document.getElementById('form-reg');
+        const formS = document.getElementById('form-staff');
+        const totalP = document.getElementById('tot');
+        const totalS = document.getElementById('tots');
+        const selP = document.getElementById('e');
+        const selS = document.getElementById('es');
+        const listV = document.getElementById('list-e');
+        const panel = document.getElementById('admin');
+        const contenedorListas = document.getElementById('listas-separadas-eventos');
+
+  let pData = []; 
+        let plantillaAsistenteNube = "";
+        let plantillaStaffNube = "";
+        
+        let eData = JSON.parse(localStorage.getItem('eData')) || [
+            "Ceremonia de Agradecimiento a la Pachamama - 21-Agosto-2026", 
+            "Ceremonia de Equinoccio de Primavera - 21-Septiembre-2026"
+        ];
+
+        renderE();
+
+        function cambiarForm(tipo) {
+            if(tipo === 'participante') {
+                document.getElementById('vista-form').style.display = 'block';
+                document.getElementById('vista-form-staff').style.display = 'none';
+                document.getElementById('tab-p').classList.add('active');
+                document.getElementById('tab-s').classList.remove('active');
+            } else {
+                let passSahumador = prompt("Ingresa la contraseña de acceso para Staff / Sahumadores:");
+                if (passSahumador === "fuego2026") { 
+                    document.getElementById('vista-form').style.display = 'none';
+                    document.getElementById('vista-form-staff').style.display = 'block';
+                    document.getElementById('tab-p').classList.remove('active');
+                    document.getElementById('tab-s').classList.add('active');
+                } else {
+                    alert("Clave de acceso incorrecta. Este registro es exclusivo para el Staff.");
+                    document.getElementById('tab-p').classList.add('active');
+                    document.getElementById('tab-s').classList.remove('active');
+                }
+            }
+        }
+
+        function cargarDatosDesdeGoogle() {
+            if (panel.style.display !== "block") return;
+            contenedorListas.innerHTML = '<p style="text-align:center; font-size:12px; color:#8c6239; font-weight:bold;">Sincronizando con Google Sheets... 🔄</p>';
+
+            fetch(WEB_APP_URL)
+                .then(response => response.json())
+                .then(res => {
+                    pData = res.registros || [];
+                    plantillaAsistenteNube = res.plantillaAsistente || "";
+                    plantillaStaffNube = res.plantillaStaff || "";
+                    renderT();
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    contenedorListas.innerHTML = '<p style="text-align:center; font-size:12px; color:#ba3c3c;">Error de conexión. Inténtalo de nuevo.</p>';
+                });
+        }
+
+        function login() {
+            let pass = prompt("Ingresa la contraseña de administrador:");
+            if (pass === "2009") {
+                panel.style.display = "block";
+                alert("Acceso concedido. Panel habilitado abajo.");
+                cargarDatosDesdeGoogle();
+            } else { alert("Clave incorrecta."); }
+        }
+
+        function addE() {
+            const inp = document.getElementById('new-e');
+            let v = inp.value.trim();
+            if(v === "") return;
+            eData.push(v);
+            localStorage.setItem('eData', JSON.stringify(eData));
+            inp.value = "";
+            renderE();
+            renderT();
+        }
+
+        function delE(idx) {
+            if(confirm("¿Eliminar esta ceremonia del menú?")) {
+                eData.splice(idx, 1);
+                localStorage.setItem('eData', JSON.stringify(eData));
+                renderE();
+                renderT();
+            }
+        }
+
+        function renderE() {
+            const tempP = selP.value; const tempS = selS.value;
+            selP.innerHTML = '<option value="">-- Selecciona una Ceremonia --</option>';
+            selS.innerHTML = '<option value="">-- Selecciona una Ceremonia --</option>';
+            eData.forEach(x => {
+                let o1 = document.createElement('option'); o1.value = x; o1.textContent = x; selP.appendChild(o1);
+                let o2 = document.createElement('option'); o2.value = x; o2.textContent = x; selS.appendChild(o2);
+            });
+            selP.value = tempP; selS.value = tempS;
+            listV.innerHTML = '';
+            eData.forEach((x, i) => {
+                let d = document.createElement('div'); d.className = 'item-e';
+                d.innerHTML = '<span>'+x+'</span><button style="width:auto;margin:0;padding:2px 6px;background:#ba3c3c;color:white;border:none;border-radius:4px;cursor:pointer;" onclick="delE('+i+')">✖</button>';
+                listV.appendChild(d);
+            });
+        }
+
+        formP.addEventListener('submit', function(ev) {
+            ev.preventDefault();
+            const btn = formP.querySelector('button[type="submit"]');
+            btn.disabled = true; btn.textContent = "Procesando Registro... ⏳";
+            const obj = {
+                n: document.getElementById('n').value.trim(),
+                w: document.getElementById('w').value.trim(),
+                i: document.getElementById('i').value.trim(),
+                c: 1,
+                cat: document.getElementById('cat-p').value,
+                e: selP.value,
+                tipo: 'Asistente'
+            };
+            enviarAGoogle(obj, formP, btn, "Confirmar Mi Asistencia ✨");
+        });
+
+        formS.addEventListener('submit', function(ev) {
+            ev.preventDefault();
+            const btn = formS.querySelector('button[type="submit"]');
+            btn.disabled = true; btn.textContent = "Registrando en Staff... ⏳";
+            const obj = {
+                n: document.getElementById('ns').value.trim(),
+                w: document.getElementById('ws').value.trim(),
+                i: 'N/A (Staff)',
+                c: 1,
+                cat: document.getElementById('cat-s').value,
+                e: selS.value,
+                tipo: 'Staff'
+            };
+            enviarAGoogle(obj, formS, btn, "Registrarme como Staff / Sahumador 🔥");
+        });
+
+        function enviarAGoogle(obj, form, btn, txtOrig) {
+            fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(obj) })
+            .then(() => { alert("¡Registro procesado con éxito en la nube! ✨"); form.reset(); cargarDatosDesdeGoogle(); })
+            .catch(err => { console.error(err); alert("Hubo un problema de red, pero el sistema intentó enviar la información."); })
+            .finally(() => { btn.disabled = false; btn.textContent = txtOrig; });
+        }
+
+        function renderT() {
+            contenedorListas.innerHTML = '';
+            let gAsist = 0; let gStaf = 0;
+            if (pData.length === 0) {
+                contenedorListas.innerHTML = '<p style="text-align:center; font-size:12px; color:#a3998e;">No hay registros cargados aún.</p>';
+                totalP.textContent = '0'; totalS.textContent = '0'; return;
+            }
+            let agrupado = {};
+            eData.forEach(evt => { agrupado[evt] = { asistentes: [], staff: [] }; });
+            pData.forEach((per, idx) => {
+                let evt = per.e || "Sin Ceremonia Especificada";
+                if (!agrupado[evt]) agrupado[evt] = { asistentes: [], staff: [] };
+                if (per.tipo === 'Staff') agrupado[evt].staff.push({ ...per, idx: idx });
+                else agrupado[evt].asistentes.push({ ...per, idx: idx });
+            });
+
+            for (let nombreEvento in agrupado) {
+                let evObj = agrupado[nombreEvento];
+                if (evObj.asistentes.length === 0 && evObj.staff.length === 0) continue;
+                let tAsist = evObj.asistentes.length; let tStaf = evObj.staff.length;
+                gAsist += tAsist; gStaf += tStaf;
+
+                let tit = document.createElement('div'); tit.className = 'titulo-seccion-evento';
+                tit.textContent = `${nombreEvento} (${tAsist} Asist. / ${tStaf} Staff)`;
+                contenedorListas.appendChild(tit);
+
+                if(tAsist > 0) {
+                    let s1 = document.createElement('div'); s1.className='subtitulo-categoria'; s1.textContent='👥 Lista de Asistentes';
+                    contenedorListas.appendChild(s1);
+                    let tA = document.createElement('table');
+                    tA.innerHTML = '<thead><tr><th>Nombre</th><th>Categoría</th><th>Invitado Por</th><th>Acciones</th></tr></thead><tbody></tbody>';
+                    let tbA = tA.querySelector('tbody');
+                    evObj.asistentes.forEach(x => {
+                        let r = document.createElement('tr');
+                        r.innerHTML = `<td>${x.n}</td><td><b>${x.cat || 'Invitado'}</b></td><td>${x.i}</td><td>
+                            <button class="b-wa" title="Confirmación" onclick="send(${x.idx})">📱</button>
+                            <button class="b-wa" title="Recordatorio" style="background:#8c6239; margin-left:4px;" onclick="enviarRecordatorio(${x.idx})">⏰</button>
+                            <button class="b-del" title="Eliminar" onclick="delP(${x.idx})">🗑️</button>
+                        </td>`;
+                        tbA.appendChild(r);
+                    });
+                    contenedorListas.appendChild(tA);
+                }
+
+                if(tStaf > 0) {
+                    let s2 = document.createElement('div'); s2.className='subtitulo-categoria'; s2.textContent='🔥 Staff de Sahumadores';
+                    contenedorListas.appendChild(s2);
+                   let tS = document.createElement('table');
+                    tS.innerHTML = '<thead><tr><th>Nombre</th><th>Categoría Sahumador</th><th>Acciones</th></tr></thead><tbody></tbody>';
+                    let tbS = tS.querySelector('tbody');
+                    evObj.staff.forEach(x => {
+                        let r = document.createElement('tr');
+                        r.innerHTML = `<td>${x.n}</td><td><mark style="background:#e6dfd3; padding:2px 4px; border-radius:3px;">${x.cat || 'Staff'}</mark></td><td>
+                            <button class="b-wa" title="Confirmación Staff" style="background:#ba3c3c;" onclick="sendStaff(${x.idx})">📱</button>
+                            <button class="b-del" title="Eliminar" onclick="delP(${x.idx})">🗑️</button>
+                        </td>`;
+                        tbS.appendChild(r);
+                    });
+                    contenedorListas.appendChild(tS);
+                }
+            }
+            totalP.textContent = gAsist; totalS.textContent = gStaf;
+        }
+
+        function send(idx) {
+            let p = pData[idx];
+            let txtBase = plantillaAsistenteNube;
+            if(!txtBase) {
+                txtBase = "¡Hola {nombre}! ✨ Confirmamos tu registro como *{categoria}* para la *{ceremonia}*.\n\n📜 *REQUISITOS:*\n• Ropa cómoda clara.\n• Mantilla/colchoneta.\n• Ayuno ligero.";
+            }
+            let textoFinal = txtBase.replace(/{nombre}/g, p.n).replace(/{ceremonia}/g, p.e).replace(/{categoria}/g, p.cat);
+            window.open("https://wa.me/" + p.w + "?text=" + encodeURIComponent(textoFinal), "_blank");
+        }
+
+        function sendStaff(idx) {
+            let p = pData[idx];
+            let txtBase = plantillaStaffNube;
+            if(!txtBase) {
+                txtBase = "¡Hola {nombre}! 🔥 Confirmamos tu servicio de Staff como *{categoria}* para la *{ceremonia}*.\n\n📍 Llegar 45 min antes con tus elementos limpios.";
+            }
+            let textoFinal = txtBase.replace(/{nombre}/g, p.n).replace(/{ceremonia}/g, p.e).replace(/{categoria}/g, p.cat);
+            window.open("https://wa.me/" + p.w + "?text=" + encodeURIComponent(textoFinal), "_blank");
+        }
+
+        function enviarRecordatorio(idx) {
+            let p = pData[idx];
+            let txt = encodeURIComponent("¡Hola " + p.n + "! ⏰ Este es un recordatorio afectuoso de la Comunidad Jeyajé. Nos encontramos muy pronto para celebrar la *" + p.e + "*.\n\nPor favor llega con 15 minutos de anticipación. ¡Muchas bendiciones! 🔥🌈");
+            window.open("https://wa.me/" + p.w + "?text=" + txt, "_blank");
+        }
+
+        function delP(idx) {
+            if(confirm("¿Seguro que deseas eliminar este registro? (Recuerda borrarlo también de tu Google Sheets)")) {
+                pData.splice(idx, 1); renderT();
+            }
+        }
+
+        function copiarListaCompleta() {
+            if(pData.length === 0) { alert("No hay registros."); return; }
+            let agrupado = {};
+            eData.forEach(evt => { agrupado[evt] = { asistentes: [], staff: [] }; });
+            pData.forEach(x => {
+                let evt = x.e || "Otros";
+                if(!agrupado[evt]) agrupado[evt] = { asistentes: [], staff: [] };
+                if(x.tipo === 'Staff') agrupado[evt].staff.push(x);
+                else agrupado[evt].asistentes.push(x);
+            });
+
+            let txt = "*REPORTE GENERAL - TRIBU JEYAJÉ ARCO IRIS*\n=========================================\n\n";
+            for (let evento in agrupado) {
+                let ev = agrupado[evento];
+                if(ev.asistentes.length === 0 && ev.staff.length === 0) continue;
+                txt += "🔥 *" + evento.toUpperCase() + "*\n";
+                if(ev.asistentes.length > 0) {
+                    txt += "  👥 ASISTENTES:\n";
+                    ev.asistentes.forEach((x, i) => { txt += `    ${i+1}. ${x.n} [${x.cat}] (Inv: ${x.i})\n`; });
+                }
+                if(ev.staff.length > 0) {
+                    txt += "  ⚡ STAFF / SAHUMADORES:\n";
+                    ev.staff.forEach((x, i) => { txt += `    ${i+1}. ${x.n} (${x.cat})\n`; });
+                }
+                txt += "\n";
+            }
+            navigator.clipboard.writeText(txt).then(() => { alert("¡Reporte copiado con éxito!"); });
+        }
+    </script>
+</body>
+</html>
