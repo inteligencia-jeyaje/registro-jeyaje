@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad Jeyajé Arco Iris</title>
+    <title>Tribu Jeyajé Arco Iris</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f4f1ea; color: #3e362e; padding: 20px; display: flex; flex-direction: column; align-items: center; margin: 0; }
         header { text-align: center; background: #ba3c3c; color: white; padding: 15px; border-radius: 12px; width: 100%; max-width: 480px; box-sizing: border-box; }
@@ -35,7 +35,7 @@
 <body>
 
     <header>
-        <h1>Comunidad Holística Jeyajé Arco Iris</h1>
+        <h1>Tribu Jeyajé Arco Iris</h1>
         <p>Formulario Oficial de Inscripción</p>
     </header>
 
@@ -110,7 +110,7 @@
     </main>
 
     <script>
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpiJ6xBLTamw6zA5elKsSPHTAT0Oyj5cenAPfxTPeFliS8UvhXxAHlC_GWDS6LWFhwlw/exec";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlLOH7qho1xfUpKkwjjkgY1h-RBMf79VGN6sKVXxvFLa3uN1PPDJ7SMsy-_BJBj4Ff5A/exec";
 
         const formP = document.getElementById('form-reg');
         const formS = document.getElementById('form-staff');
@@ -127,8 +127,8 @@
         let plantillaStaffNube = "";
         
         let eData = JSON.parse(localStorage.getItem('eData')) || [
-            "Ceremonia de Agradecimiento a la Pachamama - 21-Agosto-2026", 
-            "Ceremonia de Equinoccio de Primavera - 21-Septiembre-2026"
+            "Ceremonia de Agradecimiento a la Pachamama - Servicio Planetario 21-Agosto-2026", 
+            "Ceremonia de Equinoccio de Primavera - Servicio Planetario 21-Septiembre-2026"
         ];
 
         renderE();
@@ -325,7 +325,7 @@
             let p = pData[idx];
             let txtBase = plantillaAsistenteNube;
             if(!txtBase) {
-                txtBase = "¡Hola {nombre}! ✨ Confirmamos tu registro como *{categoria}* para la *{ceremonia}*.\n\n📜 *REQUISITOS:*\n• Ropa cómoda clara.\n• Mantilla/colchoneta.\n• Ayuno ligero.";
+                txtBase = "¡Hola {nombre}! ✨ Confirmamos tu registro como *{categoria}* para la *{ceremonia}*.\n\n📜 *REQUISITOS:*\n• Ropa blanca o colores claros. Mujeres vestido o falda, hombres pantalón\n• Mat de yoga/cojín/colchoneta.\n• Desayunado.";
             }
             let textoFinal = txtBase.replace(/{nombre}/g, p.n).replace(/{ceremonia}/g, p.e).replace(/{categoria}/g, p.cat);
             window.open("https://wa.me/" + p.w + "?text=" + encodeURIComponent(textoFinal), "_blank");
@@ -335,7 +335,7 @@
             let p = pData[idx];
             let txtBase = plantillaStaffNube;
             if(!txtBase) {
-                txtBase = "¡Hola {nombre}! 🔥 Confirmamos tu servicio de Staff como *{categoria}* para la *{ceremonia}*.\n\n📍 Llegar 45 min antes con tus elementos limpios.";
+                txtBase = "¡Hola {nombre}! 🔥 Confirmamos tu servicio de Staff como *{categoria}* para la *{ceremonia}*.\n\n📍 Llegar 1 hora antes con tus elementos listos.";
             }
             let textoFinal = txtBase.replace(/{nombre}/g, p.n).replace(/{ceremonia}/g, p.e).replace(/{categoria}/g, p.cat);
             window.open("https://wa.me/" + p.w + "?text=" + encodeURIComponent(textoFinal), "_blank");
