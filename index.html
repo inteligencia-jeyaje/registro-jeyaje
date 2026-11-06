@@ -321,7 +321,7 @@
       window.open(urlWa, '_blank');
     }
 
-    // DISPARADOR INDEPENDIENTE DE REZADORES (Clon puro y limpio)
+       // 🔒 MOTOR RESTRUCTURADO: Jala y reemplaza dinámicamente Evento, Fecha y Lugar de cada fila
     function dispararWhatsAppNorteClonado(indexRezador) {
       var item = globalRegistros[indexRezador];
       if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
@@ -329,12 +329,26 @@
       var template = (item.tipo === "Invitado Nuevo") ? pAsistente : pStaff;
       
       if (!template) {
-        template = "¡Hola *{NOMBRE}*! 🌀 Confirmamos tu registro para el próximo encuentro de la Dirección Norte. ✨ Condición: {CONDICION}. ¡Tu voz expande el rezo!";
+        template = "¡Hola *{NOMBRE}*! 🌀 Confirmamos tu registro para el encuentro de: *{EVENTO}* el *{FECHA}* en *{LUGAR}*. ¡Tu voz expande el rezo!";
+      }
+
+      // 🕵️ Buscar los datos de la ceremonia específica a la que se inscribió el rezador
+      var fechaEvento = "";
+      var lugarEvento = "";
+      for (var c = 0; c < globalCeremonias.length; c++) {
+        if (globalCeremonias[c].nombre === item.evento) {
+          fechaEvento = globalCeremonias[c].fecha;
+          lugarEvento = globalCeremonias[c].lugar;
+          break;
+        }
       }
       
+      // Reemplazo en cadena de todas las variables vivas
       var textoFinal = template.replace(/{NOMBRE}/g, item.n)
                                 .replace(/{CONDICION}/g, item.tipo)
-                                .replace(/{EVENTO}/g, item.evento || "");
+                                .replace(/{EVENTO}/g, item.evento || "")
+                                .replace(/{FECHA}/g, fechaEvento || "la fecha programada")
+                                .replace(/{LUGAR}/g, lugarEvento || "el altar designado");
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
       var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textoFinal);
