@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dirección Norte - Control de Ceremonias</title>
+  <title>Dirección Norte - Sistema Unificado</title>
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 12px; background-color: #f4f7f6; color: #333; }
     .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 6px solid #e74c3c; }
@@ -13,14 +13,15 @@
     label { display: block; margin: 10px 0 4px; font-size: 13px; font-weight: 600; color: #4a5568; }
     input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; margin-bottom: 5px; }
     
-    /* 🗂️ ESTILOS DE PESTAÑAS ADMINISTRATIVAS INTERNAS */
-    .tabs-admin { display: flex; background: #f2f4f4; padding: 4px; border-radius: 8px; margin-bottom: 15px; gap: 4px; }
-    .tab-btn { flex: 1; padding: 10px 4px; border: none; background: none; font-size: 12px; font-weight: bold; color: #7f8c8d; cursor: pointer; border-radius: 6px; }
+    /* 🗂️ PESTAÑAS GENERALES (PÚBLICAS Y ADMINISTRATIVAS) */
+    .tabs-norte { display: flex; background: #f2f4f4; padding: 4px; border-radius: 8px; margin-bottom: 15px; gap: 4px; }
+    .tab-btn { flex: 1; padding: 11px 2px; border: none; background: none; font-size: 12px; font-weight: bold; color: #7f8c8d; cursor: pointer; border-radius: 6px; }
     .tab-btn.active { background: #e74c3c; color: white; }
+    .tab-btn.active.sahumador-mode { background: #7d3c98; color: white; }
     .panel-contenido { display: none; }
     .panel-contenido.active { display: block; }
 
-    button.save-btn { width: 100%; padding: 12px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    button.save-btn { width: 100%; padding: 12px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     .secret-trigger { width: 40px; height: 40px; margin: 25px auto 0; cursor: pointer; opacity: 0.15; transition: opacity 0.2s; font-size: 20px; text-align: center; }
     .secret-trigger:hover { opacity: 0.6; }
     .panel-encargada { display: none; margin-top: 20px; border-top: 2px dashed #e74c3c; padding-top: 15px; }
@@ -32,12 +33,18 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="container" id="marco-norte-main">
     <h2>🔥 Dirección del Norte</h2>
     <div id="status-box"></div>
 
-    <!-- 📋 FORMULARIO PÚBLICO LIMPIO -->
-    <div id="pantalla-inscripcion">
+    <!-- PESTAÑAS PÚBLICAS REZADORES VS SAHUMADORES -->
+    <div class="tabs-norte" id="bloque-pestañas-publicas">
+      <button class="tab-btn active" id="btn-pub-rezar" onclick="cambiarSeccionPublica('rezar')">👥 Participantes</button>
+      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">🔮 Sahumadores (Servicio)</button>
+    </div>
+
+    <!-- SECCION PÚBLICA 1: INSCRIPCIÓN DE PARTICIPANTES GENERALES -->
+    <div id="panel-pub-rezar" class="panel-contenido active">
       <h3>Inscripción al Altar del Norte</h3>
       <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-top:-8px;">Registra tu asistencia para sostener el fuego sagrado de la Tribu.</p>
       
@@ -45,7 +52,6 @@
         <div class="titulo-card">👤 Ficha de Identidad</div>
         <label>Nombre Completo:</label>
         <input type="text" id="nombreRezador" placeholder="Ej. Juan Carlos Flores">
-        
         <label>Número de WhatsApp:</label>
         <input type="text" id="telefono" placeholder="Ej. 59170000000">
       </div>
@@ -53,45 +59,72 @@
       <div class="card-norte">
         <div class="titulo-card">🔥 Altar y Ceremonia</div>
         <label>Selecciona la Ceremonia a Asistir:</label>
-        <select id="select-ceremonia-dinamica">
-          <!-- Se llena dinámicamente desde el Sheets -->
+        <select class="combo-ceremonias-clase" id="select-ceremonia-dinamica">
+          <!-- Se llena dinámicamente -->
         </select>
-
         <label>Condición en el Altar:</label>
         <select id="tipoParticipante">
           <option value="Miembro de la Comunidad">Miembro de la Comunidad</option>
           <option value="Invitado Nuevo">Invitado Nuevo (Primera vez)</option>
         </select>
       </div>
+      <button class="save-btn" onclick="guardarInscripcionNorte('Rezadores', 'nombreRezador', 'telefono', 'tipoParticipante')">Enviar Mi Inscripción al Altar 🔥</button>
+    </div>
+        <!-- SECCION PÚBLICA 2: REGISTRO RECUPERADO DE SAHUMADORES EN SERVICIO -->
+    <div id="panel-pub-sahumar" class="panel-contenido">
+      <h3 style="color: #7d3c98;">Registro de Servidores Altar</h3>
+      <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-top:-8px;">Inscripción exclusiva para Sahumadores que sostienen el fuego.</p>
+      
+      <div class="card-norte" style="border-color: #bb8fce;">
+        <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">👤 Identidad del Servidor</div>
+        <label>Nombre Completo:</label>
+        <input type="text" id="nombreSahumador" placeholder="Ej. Ana María Claros">
+        <label>Número de WhatsApp:</label>
+        <input type="text" id="telefonoSahumador" placeholder="Ej. 59170000000">
+      </div>
 
-      <button class="save-btn" onclick="guardarInscripcionNorte()">Enviar Mi Inscripción al Altar 🔥</button>
+      <div class="card-norte" style="border-color: #bb8fce;">
+        <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">🔮 Intención del Servicio</div>
+        <label>Selecciona la Ceremonia a Servir:</label>
+        <select class="combo-ceremonias-clase" id="select-ceremonia-sahumador">
+          <!-- Se llena dinámicamente -->
+        </select>
+        <label>Rol de Servicio:</label>
+        <select id="rolSahumador">
+          <option value="Sahumador Principal">Sahumador Principal</option>
+          <option value="Apoyo de Fuego">Apoyo de Fuego / Guardián</option>
+          <option value="Músico / Canto Medicina">Músico / Canto Medicina</option>
+        </select>
+      </div>
+      <button class="save-btn" style="background-color: #7d3c98;" onclick="guardarInscripcionNorte('Sahumadores', 'nombreSahumador', 'telefonoSahumador', 'rolSahumador')">Sellar Compromiso de Servicio 🔮</button>
     </div>
 
     <!-- ⚙️ BOTÓN OCULTO DE ENGRANAJE EXCLUSIVO PARA LA ENCARGADA -->
     <div class="secret-trigger" onclick="abrirConsolaEncargada()">⚙️</div>
 
-    <!-- 🦅 PANTALLA PRIVADA ADMINISTRATIVA CON MENU DE PESTAÑAS INTERNAS -->
+    <!-- 🦅 PANTALLA PRIVADA ADMINISTRATIVA DE LA ENCARGADA -->
     <div id="sec-admin-norte" class="panel-encargada">
-      <h3>🦅 Consola Administrativa del Fuego</h3>
+      <h3>🦅 Consola Administrativa (Fuego del Norte)</h3>
       
-      <div class="tabs-admin">
+      <!-- Subpestañas Internas del Menú del Encargado -->
+      <div class="tabs-norte" style="background: #eaeded;">
         <button class="tab-btn active" id="btn-p-lista" onclick="cambiarPestañaAdmin('lista')">👥 Lista Espera</button>
         <button class="tab-btn" id="btn-p-crear" onclick="cambiarPestañaAdmin('crear')">➕ Crear Evento</button>
         <button class="tab-btn" id="btn-p-convoc" onclick="cambiarPestañaAdmin('convoc')">📢 Convocatorias</button>
       </div>
 
-      <!-- PESTAÑA A: LISTA DE ESPERA REZADORES -->
+      <!-- SUBPESTAÑA A: LISTA DE ESPERA (Auditoría Administrativa) -->
       <div id="panel-admin-lista" class="panel-contenido active">
         <div class="card-norte">
-          <div class="titulo-card">Rezadores Inscritos en Espera</div>
+          <div class="titulo-card">Rezadores e Inscritos en Espera</div>
           <button class="save-btn" style="background-color:#2c3e50; margin-bottom:15px; margin-top:0;" onclick="cargarDatosDireccionNorte()">🔄 Sincronizar Base de Datos</button>
           <div id="listado-rezadores-vivos"></div>
         </div>
       </div>
 
-      <!-- PESTAÑA B: CREACIÓN EXCLUSIVA DE EVENTOS/CEREMONIAS -->
+      <!-- SUBPESTAÑA B: CREACIÓN EXCLUSIVA DE EVENTOS O CEREMONIAS -->
       <div id="panel-admin-crear" class="panel-contenido">
-        <div class="card-norte" style="border-left: 5px solid #2980b9;">
+        <div class="card-norte" style="border-left: 5px solid #2980b9; border-color: #a9ccee;">
           <div class="titulo-card" style="color:#2980b9; border-bottom-color:#2980b9;">➕ Publicar Nueva Ceremonia en Cartelera</div>
           <label>Nombre de la Ceremonia:</label>
           <input type="text" id="crear-ev-nombre" placeholder="Ej. Ceremonia de Luna Llena">
@@ -103,10 +136,11 @@
         </div>
       </div>
 
-      <!-- PESTAÑA C: COMPARTIR CONVOCATORIAS GENERALES -->
+      <!-- SUBPESTAÑA C: COMPARTIR CONVOCATORIAS GENERALES -->
       <div id="panel-admin-convoc" class="panel-contenido">
-        <div class="card-norte" style="border-left: 5px solid #16a085;">
-          <div class="titulo-card" style="color:#16a085; stroke-color:#16a085;">📢 Convocatorias Generales Dinámicas</div>
+        <div class="card-norte" style="border-left: 5px solid #16a085; border-color: #a2d9ce;">
+          <div class="titulo-card" style="color:#16a085; border-bottom-color:#16a085;">📢 Compartir Invitaciones en Canales o Grupos</div>
+          <p style="font-size:11px; color:#7f8c8d; margin-top:-5px;">Haz clic en el botón verde del evento correspondiente para armar de forma automática la invitación general y enviarla a tus grupos de WhatsApp.</p>
           <div id="bloque-ceremonias-vivas"></div>
         </div>
       </div>
@@ -115,7 +149,8 @@
   </div>
   <script>
     // URL PROVISTA POR TU CUENTA DE GOOGLE APPS SCRIPT DE LA DIRECCIÓN NORTE
-    const WEB_APP_URL_NORTE = "https://script.google.com/macros/s/AKfycbxlLOH7qho1xfUpKkwjjkgY1h-RBMf79VGN6sKVXxvFLa3uN1PPDJ7SMsy-_BJBj4Ff5A/exec";;
+    // REEMPLAZA ESTA DIRECCIÓN CON TU URL LARGA QUE TERMINA EN /exec
+    const WEB_APP_URL_NORTE = "https://script.google.com/macros/s/AKfycbxlLOH7qho1xfUpKkwjjkgY1h-RBMf79VGN6sKVXxvFLa3uN1PPDJ7SMsy-_BJBj4Ff5A/exec";
     
     var globalRegistros = [];
     var globalCeremonias = [];
@@ -129,10 +164,23 @@
       setTimeout(function() { box.style.display = "none"; }, 4000);
     }
 
-    // A) NAVEGACIÓN INTERNA DE PESTAÑAS ADMINISTRATIVAS
+    // A) CONTROL PÚBLICO: ALTERNAR REZADORES VS SAHUMADORES
+    function cambiarSeccionPublica(id) {
+      document.getElementById("panel-pub-rezar").className = "panel-contenido";
+      document.getElementById("panel-pub-sahumar").className = "panel-contenido";
+      document.getElementById("btn-pub-rezar").className = "tab-btn";
+      document.getElementById("btn-pub-sahumar").className = "tab-btn";
+      
+      document.getElementById("panel-pub-" + id).className = "panel-contenido active";
+      var btnActivo = document.getElementById("btn-pub-" + id);
+      btnActivo.className = "tab-btn active" + (id === "sahumar" ? " sahumador-mode" : "");
+      document.getElementById("marco-norte-main").style.borderTopColor = id === "sahumar" ? "#7d3c98" : "#e74c3c";
+    }
+
+    // B) CONTROL ADMINISTRATIVO: ALTERNAR SUBPESTAÑAS DE LA ENCARGADA
     function cambiarPestañaAdmin(id) {
-      var panes = document.getElementsByClassName("panel-contenido");
-      var btns = document.getElementsByClassName("tab-btn");
+      var panes = document.getElementById("sec-admin-norte").getElementsByClassName("panel-contenido");
+      var btns = document.getElementById("sec-admin-norte").getElementsByClassName("tab-btn");
       for (var i = 0; i < panes.length; i++) panes[i].className = "panel-contenido";
       for (var j = 0; j < btns.length; j++) btns[j].className = "tab-btn";
       
@@ -140,20 +188,22 @@
       document.getElementById("btn-p-" + id).className = "tab-btn active";
     }
 
-    // B) ENVÍO DE INSCRIPCIÓN PÚBLICA
-    function guardarInscripcionNorte() {
-      var nombreTxt = document.getElementById("nombreRezador").value;
-      var telfTxt = document.getElementById("telefono").value;
-      var comboCere = document.getElementById("select-ceremonia-dinamica").value;
+    // C) ENVÍO UNIFICADO DE FORMULARIOS PÚBLICOS HACIA EL SHEETS
+    function guardarInscripcionNorte(pestañaDestino, idNombre, idTelefono, idCondicion) {
+      var nombreTxt = document.getElementById(idNombre).value;
+      var telfTxt = document.getElementById(idTelefono).value;
+      var comboCere = (pestañaDestino === "Rezadores") ? 
+                      document.getElementById("select-ceremonia-dinamica").value : 
+                      document.getElementById("select-ceremonia-sahumador").value;
       
       if (!nombreTxt.trim() || !telfTxt.trim()) { alert("Por favor ingresa tu nombre y número de WhatsApp."); return; }
-      if (!comboCere) { alert("No hay ceremonias activas seleccionadas."); return; }
+      if (!comboCere) { alert("No hay ceremonias activas seleccionadas en la cartelera."); return; }
       
       avisarEstado("Sincronizando con el Altar del Norte...");
 
       var datos = {
-        target_sheet: "Rezadores",
-        tipo: document.getElementById("tipoParticipante").value,
+        target_sheet: pestañaDestino,
+        tipo: document.getElementById(idCondicion).value,
         n: nombreTxt,
         w: telfTxt,
         evento: comboCere,
@@ -170,13 +220,13 @@
         body: JSON.stringify(datos)
       })
       .then(function() {
-        avisarEstado("🔥 ¡Tu inscripción ha sido enviada con éxito! La Encargada validará tu asistencia.");
-        document.getElementById("nombreRezador").value = "";
-        document.getElementById("telefono").value = "";
+        avisarEstado("🔥 ¡Tu registro ha sido enviado con éxito al Altar del Norte!");
+        document.getElementById(idNombre).value = "";
+        document.getElementById(idTelefono).value = "";
       });
     }
 
-    // C) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
+    // D) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
       var clave = prompt("Introduce la clave de la Encargada del Norte:");
       if (clave === "Norte2026" || clave === "2009") { 
@@ -185,14 +235,14 @@
       } else if (clave !== null) {
         alert("❌ Clave incorrecta.");
       }
-    }
-   // D) ENVÍO DE NUEVA CEREMONIA DIRECTO AL SHEETS
+    }  
+    // E) ENVÍO DE NUEVA CEREMONIA EXCLUSIVA DESDE EL PANEL DE ENCARGADA
     function ejecutarAsientoNuevaCeremonia() {
       var nom = document.getElementById("crear-ev-nombre").value;
       var fec = document.getElementById("crear-ev-fecha").value;
       var lug = document.getElementById("crear-ev-lugar").value;
       
-      if (!nom.trim() || !fec.trim() || !lug.trim()) { alert("Por favor completa los tres datos."); return; }
+      if (!nom.trim() || !fec.trim() || !lug.trim()) { alert("Por favor completa los tres datos de la ceremonia."); return; }
       
       var datos = {
         target_sheet: "Ceremonias",
@@ -201,7 +251,7 @@
         lugar: lug
       };
 
-      avisarEstado("Sellando e indexando nueva ceremonia en el servidor...");
+      avisarEstado("Indexando nueva ceremonia en el servidor del Norte...");
 
       fetch(WEB_APP_URL_NORTE, {
         method: "POST",
@@ -213,17 +263,18 @@
         document.getElementById("crear-ev-nombre").value = "";
         document.getElementById("crear-ev-fecha").value = "";
         document.getElementById("crear-ev-lugar").value = "";
-        cargarDatosDireccionNorte();
+        cargarDatosDireccionNorte(); // Sincronización inmediata
       });
     }
 
-    // E) LECTURA MAESTRA UNIFICADA (Limpia ejemplos y lee celdas vivas)
+    // F) LECTURA MAESTRA UNIFICADA DE GOOGLE SHEETS
     function cargarDatosDireccionNorte() {
       var listaBox = document.getElementById("listado-rezadores-vivos");
-      var comboCeremonias = document.getElementById("select-ceremonia-dinamica");
+      var comboCajaRezador = document.getElementById("select-ceremonia-dinamica");
+      var comboCajaSahuma = document.getElementById("select-ceremonia-sahumador");
       var contenedorCeremonias = document.getElementById("bloque-ceremonias-vivas");
       
-      if (listaBox) listaBox.innerHTML = "<p style='font-size:12px; color:#7f8c8d;'>Leyendo registros del Norte...</p>";
+      if (listaBox) listaBox.innerHTML = "<p style='font-size:12px; color:#7f8c8d;'>Leyendo registros oficiales del Norte...</p>";
       
       fetch(WEB_APP_URL_NORTE)
         .then(function(res) { return res.json(); })
@@ -233,10 +284,11 @@
           pAsistente = data.plantillaAsistente || "";
           pStaff = data.plantillaStaff || "";
           
+          // 1. Sincronizar Cartelera de Convocatorias en Consola Administrativa
           if (contenedorCeremonias) {
             contenedorCeremonias.innerHTML = "";
             if (globalCeremonias.length === 0) {
-              contenedorCeremonias.innerHTML = "<p style='font-size:12px; color:#7f8c8d; text-align:center;'>No hay ceremonias activas.</p>";
+              contenedorCeremonias.innerHTML = "<p style='font-size:12px; color:#7f8c8d; text-align:center;'>No hay ceremonias activas en este ciclo.</p>";
             } else {
               for (var c = 0; c < globalCeremonias.length; c++) {
                 var ev = globalCeremonias[c];
@@ -251,19 +303,25 @@
             }
           }
 
-          if (comboCeremonias) {
-            comboCeremonias.innerHTML = "";
+          // 2. Sincronizar Dinámicamente AMBOS Menús Desplegables Públicos
+          if (comboCajaRezador && comboCajaSahuma) {
+            comboCajaRezador.innerHTML = "";
+            comboCajaSahuma.innerHTML = "";
             for (var j = 0; j < globalCeremonias.length; j++) {
-              var opt = document.createElement("option");
-              opt.value = globalCeremonias[j].nombre;
-              opt.innerText = globalCeremonias[j].nombre;
-              comboCeremonias.appendChild(opt);
+              var optR = document.createElement("option");
+              optR.value = globalCeremonias[j].nombre; optR.innerText = globalCeremonias[j].nombre;
+              comboCajaRezador.appendChild(optR);
+              
+              var optS = document.createElement("option");
+              optS.value = globalCeremonias[j].nombre; optS.innerText = globalCeremonias[j].nombre;
+              comboCajaSahuma.appendChild(optS);
             }
           }
           
+          // 3. Sincronizar Listado de Espera de Rezadores Administrativo
           if (listaBox) {
             if (globalRegistros.length === 0) {
-              listaBox.innerHTML = "<p style='font-size:12px; color:#7f8c8d;'>No hay voces registradas.</p>";
+              listaBox.innerHTML = "<p style='font-size:12px; color:#7f8c8d;'>No hay voces registradas en esta luna.</p>";
               return;
             }
             listaBox.innerHTML = "";
@@ -284,7 +342,7 @@
         });
     }
 
-    // F) DISPARADOR DE CONVOCATORIA DE CEREMONIA GENERAL
+    // G) DISPARADOR DE CONVOCATORIA DE CEREMONIA GENERAL (Pestaña Convocatorias)
     function dispararConvocatoriaCeremonia(indexCeremonia) {
       var ev = globalCeremonias[indexCeremonia];
       if (!ev) { alert("Ceremonia no encontrada."); return; }
@@ -300,7 +358,7 @@
       window.open(urlWa, '_blank');
     }
 
-    // G) DISPARADOR DINÁMICO INDIVIDUAL DE REZADORES
+    // H) DISPARADOR INDIVIDUAL DE REZADORES (Asociación Cruzada de Variables Estrictas c++)
     function dispararWhatsAppNorteClonado(indexRezador) {
       var item = globalRegistros[indexRezador];
       if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
@@ -311,12 +369,13 @@
         template = "¡Hola *{NOMBRE}*! 🌀 Confirmamos tu registro para el encuentro de: *{EVENTO}* el día *{FECHA}* en *{LUGAR}*. ¡Tu voz expande el rezo!";
       }
 
-      var fechaEvento = "";
-      var lugarEvento = "";
+      var fillFecha = "";
+      var fillLugar = "";
+      // 🔒 REPARACIÓN DETALLADA CARÁCTER POR CARÁCTER: bucle for asegurado con c++
       for (var c = 0; c < globalCeremonias.length; c++) {
         if (globalCeremonias[c].nombre === item.evento) {
-          fechaEvento = globalCeremonias[c].fecha;
-          lugarEvento = globalCeremonias[c].lugar;
+          fillFecha = globalCeremonias[c].fecha;
+          fillLugar = globalCeremonias[c].lugar;
           break;
         }
       }
@@ -324,8 +383,8 @@
       var textoFinal = template.replace(/{NOMBRE}/g, item.n)
                                 .replace(/{CONDICION}/g, item.tipo)
                                 .replace(/{EVENTO}/g, item.evento || "")
-                                .replace(/{FECHA}/g, fechaEvento || "la fecha programada")
-                                .replace(/{LUGAR}/g, lugarEvento || "el altar designado");
+                                .replace(/{FECHA}/g, fillFecha || "la fecha programada")
+                                .replace(/{LUGAR}/g, fillLugar || "el altar designado");
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
       var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textoFinal);
@@ -335,4 +394,4 @@
     window.onload = cargarDatosDireccionNorte;
   </script>
 </body>
-</html>
+</html>    
