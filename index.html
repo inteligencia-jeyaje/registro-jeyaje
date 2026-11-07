@@ -453,7 +453,7 @@
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
                               "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
-      var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
+      var urlWa = "https://wa.me/" + encodeURIComponent(txtConvocatoria);
       window.open(urlWa, '_blank');
     }
 
@@ -487,7 +487,7 @@
       }
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-      var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
+      var urlWa = "https://wa.me/" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
       window.open(urlWa, '_blank');
     }
 
