@@ -444,16 +444,20 @@
       .then(function() { alert("🗑️ Registro eliminado de forma definitiva."); cargarDatosDireccionNorte(); });
     }
 
+       // J) DISPARADOR DE CONVOCATORIA DE CEREMONIA GENERAL (Pestaña Convocatorias)
     function dispararConvocatoriaCeremonia(indexCeremonia) {
       var ev = globalCeremonias[indexCeremonia];
       if (!ev) { alert("Ceremonia no encontrada."); return; }
+      
       var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
                               "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
                               "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
-      var urlWa = "https://wa.me/" + encodeURIComponent(txtConvocatoria);
+      
+      // 🔒 LA RUTA MAESTRA ANTI-404 PARA TEXTOS GENERALES: Enlace robusto corporativo que no se rompe
+      var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
       window.open(urlWa, '_blank');
     }
 
@@ -487,7 +491,9 @@
       }
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-      var urlWa = "https://wa.me/" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
+      
+      // 🔒 LA RUTA MAESTRA ANTI-404: Formato universal plano que levanta WhatsApp Web y Móvil al instante
+      var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
       window.open(urlWa, '_blank');
     }
 
