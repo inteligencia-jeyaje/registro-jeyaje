@@ -195,7 +195,6 @@
       setTimeout(function() { box.style.display = "none"; }, 4000);
     }
 
-    // A) CONTROL DE PESTAÑAS PÚBLICAS (ASISTENTES VS SAHUMADORES)
     function cambiarSeccionPublica(id) {
       document.getElementById("panel-pub-rezar").className = "panel-contenido";
       document.getElementById("panel-pub-sahumar").className = "panel-contenido";
@@ -208,7 +207,6 @@
       document.getElementById("marco-norte-main").style.borderTopColor = id === "sahumar" ? "#7d3c98" : "#e74c3c";
     }
 
-    // B) VALIDACIÓN DE LLAVE DE SERVIDORES DESDE EL SHEETS
     function validarIngresoFichaSahumador() {
       var claveInput = document.getElementById("claveValidarSahumador").value;
       if (claveInput === serverPassS || claveInput === "2009") {
@@ -219,7 +217,6 @@
       }
     }
 
-    // C) CONTROL DE PESTAÑAS ADMINISTRATIVAS INTERNAS
     function cambiarPestañaAdmin(id) {
       var panes = document.getElementById("sec-admin-norte").getElementsByClassName("panel-contenido");
       var btns = document.getElementById("sec-admin-norte").getElementsByClassName("tab-btn");
@@ -229,7 +226,7 @@
       document.getElementById("panel-admin-" + id).className = "panel-contenido active";
       document.getElementById("btn-p-" + id).className = "tab-btn active";
     }
-    // D) ENVÍO SEGURO DE REGISTROS PÚBLICOS SEGÚN EL MODO
+
     function ejecutarTransmisionPublicaNorte(modo) {
       var nombre = ""; var telf = ""; var cond = ""; var evento = ""; var sponsor = "-";
       
@@ -282,7 +279,6 @@
       });
     }
 
-    // E) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
       var clave = prompt("Introduce la clave de la Encargada del Norte:");
       if (clave === serverPassE || clave === "2009") { 
@@ -291,7 +287,6 @@
       } else if (clave !== null) { alert("❌ Clave incorrecta."); }
     }
 
-    // F) CREACIÓN DE NUEVA CEREMONIA EXCLUSIVA
     function ejecutarAsientoNuevaCeremonia() {
       var nom = document.getElementById("crear-ev-nombre").value;
       var fec = document.getElementById("crear-ev-fecha").value;
@@ -311,7 +306,6 @@
         cargarDatosDireccionNorte();
       });
     }
-    // G) LECTURA MAESTRA UNIFICADA DE GOOGLE SHEETS
     function cargarDatosDireccionNorte() {
       var listaBox = document.getElementById("listado-rezadores-vivos");
       var comboCajaRezador = document.getElementById("select-ceremonia-dinamica");
@@ -444,23 +438,21 @@
       .then(function() { alert("🗑️ Registro eliminado de forma definitiva."); cargarDatosDireccionNorte(); });
     }
 
-       // J) DISPARADOR DE CONVOCATORIA DE CEREMONIA GENERAL (Pestaña Convocatorias)
+    // 🔒 REDIRECCIÓN EN LÍNEA ANTI POP-UPS PARA CONVOCATORIAS
     function dispararConvocatoriaCeremonia(indexCeremonia) {
       var ev = globalCeremonias[indexCeremonia];
       if (!ev) { alert("Ceremonia no encontrada."); return; }
-      
       var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
                               "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
                               "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
-      
-      // 🔒 LA RUTA MAESTRA ANTI-404 PARA TEXTOS GENERALES: Enlace robusto corporativo que no se rompe
       var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
-      window.open(urlWa, '_blank');
+      window.location.href = urlWa;
     }
 
+    // 🔒 REDIRECCIÓN EN LÍNEA ANTI POP-UPS PARA CONFIRMACIONES Y RECORDATORIOS
     function dispararWhatsAppNorteClonado(indexRezador, modoEnvio) {
       var item = globalRegistros[indexRezador];
       if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
@@ -472,8 +464,7 @@
           break;
         }
       }
-
-      if (modoEnvio === "confirmar") {
+       if (modoEnvio === "confirmar") {
         var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
         if (!template) {
           template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
@@ -491,10 +482,8 @@
       }
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-      
-      // 🔒 LA RUTA MAESTRA ANTI-404: Formato universal plano que levanta WhatsApp Web y Móvil al instante
       var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
-      window.open(urlWa, '_blank');
+      window.location.href = urlWa;
     }
 
     window.onload = cargarDatosDireccionNorte;
