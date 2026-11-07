@@ -213,7 +213,7 @@
         document.getElementById("bloque-autenticacion-sahumador").style.display = "none";
         document.getElementById("formulario-oculto-sahumador").style.display = "block";
       } else {
-        alert("❌ Clave de Servidor Incorrecta. Solicita la llave al Encargado.");
+        alert("❌ Clave de Servidor Incorrecta. Solicita la llave al Encargado(a).");
       }
     }
 
@@ -265,7 +265,7 @@
         body: JSON.stringify(datos)
       })
       .then(function() {
-        avisarEstado("🔥 ¡Tu registro ha sido enviado con éxito! Hecho está.");
+        avisarEstado("✅ ¡Tu registro ha sido enviado con éxito! Hecho está.");
         if (modo === "Rezadores") {
           document.getElementById("nombreRezador").value = ""; document.getElementById("telefono").value = "";
           document.getElementById("invitadoPorPersona").value = "";
@@ -306,8 +306,7 @@
         cargarDatosDireccionNorte();
       });
     }
-
-    function cargarDatosDireccionNorte() {
+     function cargarDatosDireccionNorte() {
       var listaBox = document.getElementById("listado-rezadores-vivos");
       var comboCajaRezador = document.getElementById("select-ceremonia-dinamica");
       var comboCajaSahuma = document.getElementById("select-ceremonia-sahumador");
@@ -343,6 +342,7 @@
               }
             }
           }
+
           if (comboCajaRezador && comboCajaSahuma && comboReporte) {
             comboCajaRezador.innerHTML = "";
             comboCajaSahuma.innerHTML = "";
@@ -411,12 +411,12 @@
       
       var txt = "🔥 *LISTA DE ASISTENCIA: " + evSeleccionado.toUpperCase() + "* 🔥\n";
       txt += "----------------------------------------\n\n";
-      txt += "🔮 *SAHUMADORES (En Servicio):*\n";
+      txt += "♨️ *SAHUMADORES (En Servicio):*\n";
       if (arrayServidores.length === 0) txt += "   _Sin servidores asignados aún_\n";
       for (var s = 0; s < arrayServidores.length; s++) { txt += "   " + (s + 1) + ". " + arrayServidores[s] + "\n"; }
       
       txt += "\n👥 *ASISTENTES REGISTRADOS:*\n";
-      if (arrayAsistentes.length === 0) txt += "   _Sin participantes inscritos aún_\n";
+      if (arrayAsistentes.length === 0) txt += "   _Sin asistentes inscritos aún_\n";
       for (var a = 0; a < arrayAsistentes.length; a++) { txt += "   " + (a + 1) + ". " + arrayAsistentes[a] + "\n"; }
       txt += "\n----------------------------------------\n🎯 _Tribu Jeyajé Arco Iris_";
       
@@ -446,7 +446,7 @@
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
-                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el Fuego!";
+                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
       var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
       window.open(urlWa, '_blank');
     }
@@ -456,7 +456,7 @@
       if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
       
       var textFinal = ""; var fillFecha = ""; var fillLugar = "";
-      // 🔒 SEGURO DE BUCLE FOR AUDITADO: c++ restablecido en su eje correlativo
+      // 🔒 SEGURO TOTAL DE ITERACIÓN: bucle for auditado y amarrado estrictamente a c++
       for (var c = 0; c < globalCeremonias.length; c++) {
         if (globalCeremonias[c].nombre === item.evento) {
           fillFecha = globalCeremonias[c].fecha; fillLugar = globalCeremonias[c].lugar;
@@ -467,18 +467,18 @@
       if (modoEnvio === "confirmar") {
         var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
         if (!template) {
-          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+          template = "¡Hola *{nombre}*! ✅ Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
         }
         textFinal = template.replace(/{nombre}/g, item.n)
                             .replace(/{categoria}/g, item.cat)
                             .replace(/{ceremonia}/g, item.evento);
         textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Templo designado");
       } else {
-        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
+        textFinal = "¡Hola *" + item.n + "*! 📝 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
                     "🔥 *Ceremonia:* " + item.evento + "\n" +
                     "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
                     "📍 *Lugar:* " + fillLugar + "\n\n" +
-                    "Tu presencia unifica el rezo de la Tribu. ¡Nos vemos en la ceremonia! ✨";
+                    "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
       }
       
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
