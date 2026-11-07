@@ -195,6 +195,7 @@
       setTimeout(function() { box.style.display = "none"; }, 4000);
     }
 
+    // A) CONTROL DE PESTAÑAS PÚBLICAS (ASISTENTES VS SAHUMADORES)
     function cambiarSeccionPublica(id) {
       document.getElementById("panel-pub-rezar").className = "panel-contenido";
       document.getElementById("panel-pub-sahumar").className = "panel-contenido";
@@ -207,16 +208,18 @@
       document.getElementById("marco-norte-main").style.borderTopColor = id === "sahumar" ? "#7d3c98" : "#e74c3c";
     }
 
+    // B) VALIDACIÓN DE LLAVE DE SERVIDORES DESDE EL SHEETS
     function validarIngresoFichaSahumador() {
       var claveInput = document.getElementById("claveValidarSahumador").value;
       if (claveInput === serverPassS || claveInput === "2009") {
         document.getElementById("bloque-autenticacion-sahumador").style.display = "none";
         document.getElementById("formulario-oculto-sahumador").style.display = "block";
       } else {
-        alert("❌ Clave de Servidor Incorrecta. Solicita la llave al Encargado(a).");
+        alert("❌ Clave de Servidor Incorrecta. Solicita la llave al Encargado.");
       }
     }
 
+    // C) CONTROL DE PESTAÑAS ADMINISTRATIVAS INTERNAS
     function cambiarPestañaAdmin(id) {
       var panes = document.getElementById("sec-admin-norte").getElementsByClassName("panel-contenido");
       var btns = document.getElementById("sec-admin-norte").getElementsByClassName("tab-btn");
@@ -226,7 +229,7 @@
       document.getElementById("panel-admin-" + id).className = "panel-contenido active";
       document.getElementById("btn-p-" + id).className = "tab-btn active";
     }
-
+    // D) ENVÍO SEGURO DE REGISTROS PÚBLICOS SEGÚN EL MODO
     function ejecutarTransmisionPublicaNorte(modo) {
       var nombre = ""; var telf = ""; var cond = ""; var evento = ""; var sponsor = "-";
       
@@ -265,7 +268,7 @@
         body: JSON.stringify(datos)
       })
       .then(function() {
-        avisarEstado("✅ ¡Tu registro ha sido enviado con éxito! Hecho está.");
+        avisarEstado("🔥 ¡Tu registro ha sido enviado con éxito! Hecho está.");
         if (modo === "Rezadores") {
           document.getElementById("nombreRezador").value = ""; document.getElementById("telefono").value = "";
           document.getElementById("invitadoPorPersona").value = "";
@@ -279,14 +282,16 @@
       });
     }
 
+    // E) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
-      var clave = prompt("Introduce la clave del (la) Encargado(a) del Norte:");
+      var clave = prompt("Introduce la clave de la Encargada del Norte:");
       if (clave === serverPassE || clave === "2009") { 
         document.getElementById("sec-admin-norte").style.display = "block";
         cargarDatosDireccionNorte();
       } else if (clave !== null) { alert("❌ Clave incorrecta."); }
     }
 
+    // F) CREACIÓN DE NUEVA CEREMONIA EXCLUSIVA
     function ejecutarAsientoNuevaCeremonia() {
       var nom = document.getElementById("crear-ev-nombre").value;
       var fec = document.getElementById("crear-ev-fecha").value;
@@ -306,7 +311,8 @@
         cargarDatosDireccionNorte();
       });
     }
-     function cargarDatosDireccionNorte() {
+    // G) LECTURA MAESTRA UNIFICADA DE GOOGLE SHEETS
+    function cargarDatosDireccionNorte() {
       var listaBox = document.getElementById("listado-rezadores-vivos");
       var comboCajaRezador = document.getElementById("select-ceremonia-dinamica");
       var comboCajaSahuma = document.getElementById("select-ceremonia-sahumador");
@@ -337,7 +343,7 @@
                 divC.innerHTML = "<b>🔥 Altar:</b> " + ev.nombre + "<br>" +
                                 "<b>🗓️ Fecha:</b> " + ev.fecha + "<br>" +
                                 "<b>📍 Lugar:</b> " + ev.lugar + "<br>" +
-                                "<button class='wa-send-btn' style='background-color:#16a085; margin-top:6px;' onclick='dispararConvocatoriaCeremonia(" + c + ")'>📢 Compartir Convocatoria General</button>";
+                                '<button class="wa-send-btn" style="background-color:#16a085; margin-top:6px;" onclick="dispararConvocatoriaCeremonia(' + c + ')">📢 Compartir Convocatoria General</button>';
                 contenedorCeremonias.appendChild(divC);
               }
             }
@@ -378,11 +384,11 @@
                               "<b>📱 Teléfono:</b> " + r.w + "<br>" +
                               "<b>✨ Condición:</b> " + r.cat + sponsorTxt + "<br>" +
                               "<b>🔥 Ceremonia:</b> " + r.evento + "<br>" +
-                              "<div style='display:flex; gap:4px; margin-top:8px;'>" +
-                                "<button class='wa-send-btn' style='margin-top:0; flex:1;' onclick='dispararWhatsAppNorteClonado(" + i + ", \"confirmar\")'>📲 Confirmar</button>" +
-                                "<button class='wa-send-btn' style='margin-top:0; flex:1; background-color:#e67e22;' onclick='dispararWhatsAppNorteClonado(" + i + ", \"recordar\")'>⏳ Recordar</button>" +
-                                "<button class='wa-send-btn' style='margin-top:0; width:45px; background-color:#c0392b;' onclick='ejecutarEliminacionFilaEnSheets(" + r.fila + ")'>🗑️</button>" +
-                              "</div>";
+                              '<div style="display:flex; gap:4px; margin-top:8px;">' +
+                                '<button class="wa-send-btn" style="margin-top:0; flex:1;" onclick="dispararWhatsAppNorteClonado(' + i + ', \'confirmar\')">📲 Confirmar</button>' +
+                                '<button class="wa-send-btn" style="margin-top:0; flex:1; background-color:#e67e22;" onclick="dispararWhatsAppNorteClonado(' + i + ', \'recordar\')">⏳ Recordar</button>' +
+                                '<button class="wa-send-btn" style="margin-top:0; width:45px; background-color:#c0392b;" onclick="ejecutarEliminacionFilaEnSheets(' + r.fila + ')">🗑️</button>' +
+                              '</div>';
               listaBox.appendChild(div);
             }
           }
@@ -411,12 +417,12 @@
       
       var txt = "🔥 *LISTA DE ASISTENCIA: " + evSeleccionado.toUpperCase() + "* 🔥\n";
       txt += "----------------------------------------\n\n";
-      txt += "♨️ *SAHUMADORES (En Servicio):*\n";
+      txt += "🔮 *SAHUMADORES (Servicio):*\n";
       if (arrayServidores.length === 0) txt += "   _Sin servidores asignados aún_\n";
       for (var s = 0; s < arrayServidores.length; s++) { txt += "   " + (s + 1) + ". " + arrayServidores[s] + "\n"; }
       
       txt += "\n👥 *ASISTENTES REGISTRADOS:*\n";
-      if (arrayAsistentes.length === 0) txt += "   _Sin asistentes inscritos aún_\n";
+      if (arrayAsistentes.length === 0) txt += "   _Sin participantes inscritos aún_\n";
       for (var a = 0; a < arrayAsistentes.length; a++) { txt += "   " + (a + 1) + ". " + arrayAsistentes[a] + "\n"; }
       txt += "\n----------------------------------------\n🎯 _Tribu Jeyajé Arco Iris_";
       
@@ -456,7 +462,6 @@
       if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
       
       var textFinal = ""; var fillFecha = ""; var fillLugar = "";
-      // 🔒 SEGURO TOTAL DE ITERACIÓN: bucle for auditado y amarrado estrictamente a c++
       for (var c = 0; c < globalCeremonias.length; c++) {
         if (globalCeremonias[c].nombre === item.evento) {
           fillFecha = globalCeremonias[c].fecha; fillLugar = globalCeremonias[c].lugar;
@@ -467,14 +472,14 @@
       if (modoEnvio === "confirmar") {
         var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
         if (!template) {
-          template = "¡Hola *{nombre}*! ✅ Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
         }
         textFinal = template.replace(/{nombre}/g, item.n)
                             .replace(/{categoria}/g, item.cat)
                             .replace(/{ceremonia}/g, item.evento);
-        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Templo designado");
+        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
       } else {
-        textFinal = "¡Hola *" + item.n + "*! 📝 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
+        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
                     "🔥 *Ceremonia:* " + item.evento + "\n" +
                     "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
                     "📍 *Lugar:* " + fillLugar + "\n\n" +
