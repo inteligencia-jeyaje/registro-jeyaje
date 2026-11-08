@@ -7,30 +7,24 @@
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 12px; background-color: #f4f7f6; color: #333; }
     .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 6px solid #e74c3c; position: relative; }
-    
-    /* 🎨 CABECERA INTEGRADA CON TU LOGOTIPO REAL REESCALADO */
     .header-jeyaje { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
     .logo-jeyaje-img { width: 50px; height: 50px; object-fit: contain; }
     .titulo-jeyaje-main { font-size: 20px; font-weight: bold; color: #2c3e50; margin: 0; }
     h3 { text-align: center; color: #2c3e50; margin-top: 5px; font-size: 16px; }
-    
     .card-norte { background: #fdfdfd; border: 1px solid #fadbd8; padding: 15px; border-radius: 8px; margin-bottom: 12px; text-align: left; }
     .titulo-card { font-size: 14px; font-weight: bold; color: #e74c3c; margin-bottom: 10px; border-bottom: 1px dashed #e74c3c; padding-bottom: 4px; }
     label { display: block; margin: 10px 0 4px; font-size: 13px; font-weight: 600; color: #4a5568; }
     input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; box-sizing: border-box; font-size: 14px; margin-bottom: 5px; background: white; color: #333; }
-    
     .tabs-norte { display: flex; background: #f2f4f4; padding: 4px; border-radius: 8px; margin-bottom: 15px; gap: 4px; }
     .tab-btn { flex: 1; padding: 11px 2px; border: none; background: none; font-size: 12px; font-weight: bold; color: #7f8c8d; cursor: pointer; border-radius: 6px; }
     .tab-btn.active { background: #e74c3c; color: white; }
     .tab-btn.active.sahumador-mode { background: #7d3c98; color: white; }
     .panel-contenido { display: none; }
     .panel-contenido.active { display: block; }
-
     button.save-btn { width: 100%; padding: 12px; background-color: #e74c3c; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     .secret-trigger { width: 40px; height: 40px; margin: 25px auto 0; cursor: pointer; opacity: 0.15; transition: opacity 0.2s; font-size: 20px; text-align: center; }
     .secret-trigger:hover { opacity: 0.6; }
     .panel-encargada { display: none; margin-top: 20px; border-top: 2px dashed #e74c3c; padding-top: 15px; }
-    
     .ceremonia-card-norte { background: #fdfefe; border: 1px solid #d5dbdb; border-left: 5px solid #16a085; padding: 12px; border-radius: 6px; margin-bottom: 10px; text-align: left; font-size: 13px; }
     .rezador-row { background: #f9fbfb; border: 1px solid #cbd5e0; border-left: 5px solid #e74c3c; padding: 12px; border-radius: 6px; margin-bottom: 10px; text-align: left; font-size: 13px; color: #333; }
     button.wa-send-btn { background-color: #0288d1; color: white; border: none; padding: 8px 12px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 8px; box-sizing: border-box; }
@@ -38,27 +32,18 @@
   </style>
 </head>
 <body>
-
   <div class="container" id="marco-norte-main">
-    
-    <!-- 🦅 CABECERA RESTAURADA CON TU IMAGEN DE LOGO REAL -->
     <div class="header-jeyaje">
-      <img src="https://github.io" class="logo-jeyaje-img" alt="Logo Jeyajé" onerror="this.style.display='none'">
       <h1 class="titulo-jeyaje-main">Tribu Jeyajé Arco Iris</h1>
     </div>
-    
     <div id="status-box"></div>
-
     <div class="tabs-norte" id="bloque-pestañas-publicas">
       <button class="tab-btn active" id="btn-pub-rezar" onclick="cambiarSeccionPublica('rezar')">👥 Asistentes</button>
-      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">♨️ Sahumadores (En Servicio)</button>
+      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">🔮 Sahumadores (Servicio)</button>
     </div>
-
-    <!-- SECCION PÚBLICA 1: ASISTENTES CIVILES -->
     <div id="panel-pub-rezar" class="panel-contenido active">
       <h3>Inscripciones a Ceremonias</h3>
       <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-top:-8px;">Registra tu asistencia para sostener el fuego sagrado de la Tribu.</p>
-      
       <div class="card-norte">
         <div class="titulo-card">👤 Ficha de Identidad</div>
         <label>Nombre Completo:</label>
@@ -66,13 +51,10 @@
         <label>Número de WhatsApp:</label>
         <input type="text" id="telefono" placeholder="Ej. 59170000000">
       </div>
-
       <div class="card-norte">
-        <div class="titulo-card">🔥 Templo y Ceremonia</div>
+        <div class="titulo-card">🔥 Altar y Ceremonia</div>
         <label>Selecciona la Ceremonia a Asistir:</label>
-        <select class="combo-ceremonias-clase" id="select-ceremonia-dinamica">
-          <!-- Se llena dinámicamente -->
-        </select>
+        <select class="combo-ceremonias-clase" id="select-ceremonia-dinamica"></select>
         <label>Condición en el Altar:</label>
         <select id="tipoParticipante" onchange="document.getElementById('invitado-por-row').style.display=this.value==='Invitado Nuevo'?'block':'none'">
           <option value="Miembro de Comunidad Jeyajé">Miembro de Comunidad Jeyajé</option>
@@ -85,18 +67,15 @@
       </div>
       <button class="save-btn" onclick="ejecutarTransmisionPublicaNorte('Rezadores')">Enviar Mi Inscripción al Altar 🔥</button>
     </div>
-    <!-- SECCION PÚBLICA 2: REGISTRO DE SAHUMADORES PROTEGIDO CON CLAVE VIVA -->
     <div id="panel-pub-sahumar" class="panel-contenido">
       <h3 style="color: #7d3c98;">Registro de Servidores Altar</h3>
       <p style="font-size:11px; color:#7f8c8d; text-align:center; margin-top:-8px;">Inscripción exclusiva para Sahumadores que sostienen el fuego.</p>
-      
       <div class="card-norte" style="border-color: #7d3c98;" id="bloque-autenticacion-sahumador">
         <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #7d3c98;">🔒 Validación Requerida</div>
         <label>Introduce la Clave de Acceso para Servidores:</label>
         <input type="password" id="claveValidarSahumador" placeholder="Clave entregada por el Encargado">
         <button class="save-btn" style="background-color: #7d3c98; margin-top: 8px;" onclick="validarIngresoFichaSahumador()">Verificar Credenciales 🔑</button>
       </div>
-
       <div id="formulario-oculto-sahumador" style="display: none;">
         <div class="card-norte" style="border-color: #bb8fce;">
           <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">👤 Identidad del Servidor</div>
@@ -105,13 +84,10 @@
           <label>Número de WhatsApp:</label>
           <input type="text" id="telefonoSahumador" placeholder="Ej. 59170000000">
         </div>
-
         <div class="card-norte" style="border-color: #bb8fce;">
-          <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">🔮 Intención del Servicio</div>
+          <div class="titulo-card" style="color: #bb8fce; border-bottom-color: #bb8fce;">🔮 Intención del Servicio</div>
           <label>Selecciona la Ceremonia a Servir:</label>
-          <select class="combo-ceremonias-clase" id="select-ceremonia-sahumador">
-            <!-- Se llena dinámicamente -->
-          </select>
+          <select class="combo-ceremonias-clase" id="select-ceremonia-sahumador"></select>
           <label>Condición del Sahumador:</label>
           <select id="tipoSahumador">
             <option value="Sahumador de Tribu Jeyajé">Sahumador de Tribu Jeyajé</option>
@@ -121,38 +97,25 @@
         <button class="save-btn" style="background-color: #7d3c98;" onclick="ejecutarTransmisionPublicaNorte('Sahumadores')">Sellar Compromiso de Servicio 🔮</button>
       </div>
     </div>
-
-    <!-- ⚙️ BOTÓN OCULTO DE ENGRANAJE EXCLUSIVO PARA LA ENCARGADA -->
     <div class="secret-trigger" onclick="abrirConsolaEncargada()">⚙️</div>
-
-    <!-- 🦅 PANTALLA PRIVADA ADMINISTRATIVA DE LA ENCARGADA -->
     <div id="sec-admin-norte" class="panel-encargada">
       <h3>🦅 Consola Administrativa (Aire del Norte)</h3>
-      
       <div class="tabs-norte">
         <button class="tab-btn active" id="btn-p-lista" onclick="cambiarPestañaAdmin('lista')">👥 Lista Espera</button>
         <button class="tab-btn" id="btn-p-crear" onclick="cambiarPestañaAdmin('crear')">➕ Crear Evento</button>
         <button class="tab-btn" id="btn-p-convoc" onclick="cambiarPestañaAdmin('convoc')">📢 Convocatorias</button>
       </div>
-
-      <!-- SUBPESTAÑA A: LISTA DE ESPERA (Con Reportes de WhatsApp por Ceremonia) -->
       <div id="panel-admin-lista" class="panel-contenido active">
         <div class="card-norte">
           <div class="titulo-card">Asistentes en Lista de Espera</div>
           <button class="save-btn" style="background-color:#2c3e50; margin-bottom:15px; margin-top:0;" onclick="cargarDatosDireccionNorte()">🔄 Sincronizar Base de Datos</button>
-          
           <label>Generar Lista de Asistencia de:</label>
-          <select id="select-reporte-evento" onchange="procesarListaTextoPlanoWhatsApp()">
-            <!-- Se llena dinámicamente -->
-          </select>
+          <select id="select-reporte-evento" onchange="procesarListaTextoPlanoWhatsApp()"></select>
           <button class="save-btn" style="background-color:#16a085; margin-top:2px; margin-bottom:15px;" onclick="copiarListaTextoPlanoMemoria()">📋 Copiar Lista de Asistencia (WhatsApp)</button>
           <div id="out-lista-texto" class="reporte-output" style="display:none;"></div>
-
           <div id="listado-rezadores-vivos" style="margin-top:15px;"></div>
         </div>
       </div>
-
-      <!-- SUBPESTAÑA B: CREACIÓN EXCLUSIVA DE EVENTOS O CEREMONIAS -->
       <div id="panel-admin-crear" class="panel-contenido">
         <div class="card-norte" style="border-left: 5px solid #2980b9;">
           <div class="titulo-card" style="color:#2980b9; border-bottom-color:#2980b9;">➕ Publicar Nueva Ceremonia en Cartelera</div>
@@ -166,19 +129,17 @@
         </div>
       </div>
 
-      <!-- SUBPESTAÑA C: COMPARTIR CONVOCATORIAS GENERALES -->
       <div id="panel-admin-convoc" class="panel-contenido">
         <div class="card-norte" style="border-left: 5px solid #16a085;">
-          <div class="titulo-card" style="color:#16a085; border-bottom-color:#16a085;">📢 Convocatorias Generales Dinámicas</div>
+          <div class="titulo-card" style="color:#16a085; border-bottom-color:#16a085;">📢 Convocatorias Generales Dinamientos</div>
           <div id="bloque-ceremonias-vivas"></div>
         </div>
       </div>
-
     </div>
   </div>
-
   <script>
     // URL PROVISTA POR TU CUENTA DE GOOGLE APPS SCRIPT DE LA DIRECCIÓN NORTE
+    // REEMPLAZA ESTA DIRECCIÓN CON TU URL LARGA QUE TERMINA EN /exec
     const WEB_APP_URL_NORTE = "https://script.google.com/macros/s/AKfycbwbO3mUyFBapSuYMlTpokuzjP2kIb2oEivhSz55fXw90yheAFZT4sAPV-3LHrKBbMEoSw/exec";
     
     var globalRegistros = [];
@@ -195,6 +156,7 @@
       setTimeout(function() { box.style.display = "none"; }, 4000);
     }
 
+    // A) NAVEGACIÓN PÚBLICA: ALTERNAR ASISTENTES VS SAHUMADORES
     function cambiarSeccionPublica(id) {
       document.getElementById("panel-pub-rezar").className = "panel-contenido";
       document.getElementById("panel-pub-sahumar").className = "panel-contenido";
@@ -207,6 +169,7 @@
       document.getElementById("marco-norte-main").style.borderTopColor = id === "sahumar" ? "#7d3c98" : "#e74c3c";
     }
 
+    // B) VALIDACIÓN DE LLAVE DE SERVIDORES DESDE EL SHEETS
     function validarIngresoFichaSahumador() {
       var claveInput = document.getElementById("claveValidarSahumador").value;
       if (claveInput === serverPassS || claveInput === "2009") {
@@ -217,6 +180,7 @@
       }
     }
 
+    // C) CONTROL DE PESTAÑAS ADMINISTRATIVAS INTERNAS
     function cambiarPestañaAdmin(id) {
       var panes = document.getElementById("sec-admin-norte").getElementsByClassName("panel-contenido");
       var btns = document.getElementById("sec-admin-norte").getElementsByClassName("tab-btn");
@@ -226,7 +190,7 @@
       document.getElementById("panel-admin-" + id).className = "panel-contenido active";
       document.getElementById("btn-p-" + id).className = "tab-btn active";
     }
-
+    // D) TRANSMISIÓN PÚBLICA INTEGRAL CON ORDEN DE COLUMNAS ASENTADO
     function ejecutarTransmisionPublicaNorte(modo) {
       var nombre = ""; var telf = ""; var cond = ""; var evento = ""; var sponsor = "-";
       
@@ -244,16 +208,18 @@
       }
       
       if (!nombre.trim() || !telf.trim()) { alert("Por favor ingresa tu nombre y número de WhatsApp."); return; }
-      if (!evento) { alert("Por favor selecciona una ceremonia de la lista."); return; }
+      if (!evento) { alert("Por favor selecciona una ceremonia activa de la lista."); return; }
       
+      avisarEstado("Sincronizando con el Altar del Norte...");
+
       var datos = {
         target_sheet: "Rezadores",
         tipo: modo === "Rezadores" ? "Asistente" : "Sahumador",
         n: nombre,
         w: telf,
-        cat: cond,    
-        evento: evento, 
-        e: sponsor
+        cat: cond,    // Guarda condición en la columna E ({categoria})
+        evento: evento, // Guarda ceremonia en la columna F ({ceremonia})
+        e: sponsor   // Guarda el Invitado Por en la columna G ("Notas")
       };
 
       fetch(WEB_APP_URL_NORTE, {
@@ -279,6 +245,7 @@
       });
     }
 
+    // E) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
       var clave = prompt("Introduce la clave de la Encargada del Norte:");
       if (clave === serverPassE || clave === "2009") { 
@@ -287,6 +254,7 @@
       } else if (clave !== null) { alert("❌ Clave incorrecta."); }
     }
 
+    // F) CREACIÓN DE NUEVA CEREMONIA DIRECTO DESDE EL PANEL
     function ejecutarAsientoNuevaCeremonia() {
       var nom = document.getElementById("crear-ev-nombre").value;
       var fec = document.getElementById("crear-ev-fecha").value;
@@ -306,6 +274,7 @@
         cargarDatosDireccionNorte();
       });
     }
+    // G) LECTURA MAESTRA UNIFICADA DE GOOGLE SHEETS (Bucle c++ Asegurado de Fábrica)
     function cargarDatosDireccionNorte() {
       var listaBox = document.getElementById("listado-rezadores-vivos");
       var comboCajaRezador = document.getElementById("select-ceremonia-dinamica");
@@ -330,6 +299,7 @@
             if (globalCeremonias.length === 0) {
               contenedorCeremonias.innerHTML = "<p style='font-size:12px; color:#a0a5aa; text-align:center;'>No hay ceremonias activas en este ciclo.</p>";
             } else {
+              // 🔒 Blindado carátcer por carácter con c++ para evitar bucles infinitos
               for (var c = 0; c < globalCeremonias.length; c++) {
                 var ev = globalCeremonias[c];
                 var divC = document.createElement("div");
@@ -374,6 +344,7 @@
               var colorBorde = (r.tipo === "Sahumador") ? "#7d3c98" : "#e74c3c";
               div.style.borderLeftColor = colorBorde;
               
+              // Inyección de botones limpia de comillas complejas cruzadas
               div.innerHTML = "<b>👤 Nombre:</b> " + r.n + " (" + r.tipo + ")<br>" +
                               "<b>📱 Teléfono:</b> " + r.w + "<br>" +
                               "<b>✨ Condición:</b> " + r.cat + sponsorTxt + "<br>" +
@@ -392,6 +363,7 @@
         });
     }
 
+    // H) PROCESAR REPORTE TEXTO PLANO POR CEREMONIA
     function procesarListaTextoPlanoWhatsApp() {
       var evSeleccionado = document.getElementById("select-reporte-evento").value;
       var outBox = document.getElementById("out-lista-texto");
@@ -431,6 +403,7 @@
       });
     }
 
+    // I) ELIMINACIÓN DE FILA DIRECTA EN SHEETS
     function ejecutarEliminacionFilaEnSheets(numeroFila) {
       if (!confirm("⚠️ ¿Estás seguro de que deseas eliminar permanentemente este registro de la base de datos?")) return;
       avisarEstado("Borrando fila del historial...");
@@ -438,88 +411,55 @@
       .then(function() { alert("🗑️ Registro eliminado de forma definitiva."); cargarDatosDireccionNorte(); });
     }
 
-    // 🔒 REDIRECCIÓN EN LÍNEA ANTI POP-UPS PARA CONVOCATORIAS
+    // J) DISPARADOR DE CONVOCATORIA GENERAL (Notebook Anti-404 y Anti-Bloqueos)
     function dispararConvocatoriaCeremonia(indexCeremonia) {
       var ev = globalCeremonias[indexCeremonia];
       if (!ev) { alert("Ceremonia no encontrada."); return; }
+      
       var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
                               "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
                               "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
-      var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
+      
+      var urlWa = "https://wa.me" + encodeURIComponent(txtConvocatoria);
       window.location.href = urlWa;
     }
 
-    // J) DISPARADOR DE CONVOCATORIA GENERAL CON ESCUDO DE RED DIRECTO
-    function dispararConvocatoriaCeremonia(indexCeremonia) {
-      try {
-        var ev = globalCeremonias[indexCeremonia];
-        if (!ev) { alert("Ceremonia no encontrada."); return; }
-        
-        var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
-                                "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
-                                "🔥 *Ceremonia:* " + ev.nombre + "\n" +
-                                "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
-                                "📍 *Lugar:* " + ev.lugar + "\n\n" +
-                                "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
-        
-        var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
-        
-        // Bypass Directo: Forzamos la redirección de ventana inmediata
-        window.location.href = urlWa;
-      } catch (err) {
-        alert("⚠️ Interferencia de seguridad en el navegador. Abriendo canal alterno...");
-        window.open("https://whatsapp.comHola%20Tribu", '_blank');
-      }
-    }
-
-    // K) DISPARADOR INDIVIDUAL DE CONFIRMACIÓN Y RECORDATORIO CON DOBLE ESCUDO
+    // K) DISPARADOR INDIVIDUAL (Notebook Anti-404 y Anti-Bloqueos)
     function dispararWhatsAppNorteClonado(indexRezador, modoEnvio) {
-      try {
-        var item = globalRegistros[indexRezador];
-        if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
-        
-        var textFinal = ""; var fillFecha = ""; var fillLugar = "";
-        
-        // Bucle correlativo plano auditado carácter por carácter (c++)
-        for (var c = 0; c < globalCeremonias.length; c++) {
-          if (globalCeremonias[c].nombre === item.evento) {
-            fillFecha = globalCeremonias[c].fecha; 
-            fillLugar = globalCeremonias[c].lugar;
-            break;
-          }
+      var item = globalRegistros[indexRezador];
+      if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
+      
+      var textFinal = ""; var fillFecha = ""; var fillLugar = "";
+      for (var c = 0; c < globalCeremonias.length; c++) {
+        if (globalCeremonias[c].nombre === item.evento) {
+          fillFecha = globalCeremonias[c].fecha; fillLugar = globalCeremonias[c].lugar;
+          break;
         }
-
-        if (modoEnvio === "confirmar") {
-          var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
-          if (!template) {
-            template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
-          }
-          textFinal = template.replace(/{nombre}/g, item.n)
-                              .replace(/{categoria}/g, item.cat)
-                              .replace(/{ceremonia}/g, item.evento);
-          textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
-        } else {
-          textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
-                      "🔥 *Ceremonia:* " + item.evento + "\n" +
-                      "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
-                      "📍 *Lugar:* " + fillLugar + "\n\n" +
-                      "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
-        }
-        
-        var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-        var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
-        
-        // Ejecución forzada inyectada en la pestaña activa
-        window.location.href = urlWa;
-        
-      } catch (e) {
-        // Altar de escape: si el navegador congela la orden, el bypass rompe el bloqueo
-        var numFallback = item.w.toString().replace(/[^0-9]/g, "");
-        window.open("https://whatsapp.com" + numFallback, '_blank');
       }
+
+      if (modoEnvio === "confirmar") {
+        var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
+        if (!template) {
+          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+        }
+        textFinal = template.replace(/{nombre}/g, item.n)
+                            .replace(/{categoria}/g, item.cat)
+                            .replace(/{ceremonia}/g, item.evento);
+        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
+      } else {
+        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
+                    "🔥 *Ceremonia:* " + item.evento + "\n" +
+                    "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
+                    "📍 *Lugar:* " + fillLugar + "\n\n" +
+                    "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
+      }
+      
+      var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
+      var urlWa = "https://wa.me" + numeroLimpio + "?text=" + encodeURIComponent(textFinal);
+      window.location.href = urlWa;
     }
 
     window.onload = cargarDatosDireccionNorte;
