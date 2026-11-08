@@ -457,8 +457,14 @@
                     "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
       }
       
+      // 🔒 FILTRADO EXTREMO: Extrae única y exclusivamente los dígitos numéricos borrando textos pegados
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-      var urlWa = "https://wa.me" + numeroLimpio + "?text=" + encodeURIComponent(textFinal);
+      
+      // 🔒 ESTRUCTURA ESTÁTICA PLANA SERRADA: Obliga al navegador a inyectar el protocolo completo y la barra divisoria
+      var prefijoSeguro = "https:" + "//" + "wa.me" + "/";
+      var urlWa = prefijoSeguro + numeroLimpio + "?text=" + encodeURIComponent(textFinal);
+      
+      // Ejecución limpia directa en la barra de locación de tu notebook
       window.location.href = urlWa;
     }
 
