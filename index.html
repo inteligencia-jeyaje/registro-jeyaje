@@ -452,38 +452,74 @@
       window.location.href = urlWa;
     }
 
-    // 🔒 REDIRECCIÓN EN LÍNEA ANTI POP-UPS PARA CONFIRMACIONES Y RECORDATORIOS
+    // J) DISPARADOR DE CONVOCATORIA GENERAL CON ESCUDO DE RED DIRECTO
+    function dispararConvocatoriaCeremonia(indexCeremonia) {
+      try {
+        var ev = globalCeremonias[indexCeremonia];
+        if (!ev) { alert("Ceremonia no encontrada."); return; }
+        
+        var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
+                                "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
+                                "🔥 *Ceremonia:* " + ev.nombre + "\n" +
+                                "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
+                                "📍 *Lugar:* " + ev.lugar + "\n\n" +
+                                "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
+        
+        var urlWa = "https://whatsapp.com" + encodeURIComponent(txtConvocatoria);
+        
+        // Bypass Directo: Forzamos la redirección de ventana inmediata
+        window.location.href = urlWa;
+      } catch (err) {
+        alert("⚠️ Interferencia de seguridad en el navegador. Abriendo canal alterno...");
+        window.open("https://whatsapp.comHola%20Tribu", '_blank');
+      }
+    }
+
+    // K) DISPARADOR INDIVIDUAL DE CONFIRMACIÓN Y RECORDATORIO CON DOBLE ESCUDO
     function dispararWhatsAppNorteClonado(indexRezador, modoEnvio) {
-      var item = globalRegistros[indexRezador];
-      if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
-      
-      var textFinal = ""; var fillFecha = ""; var fillLugar = "";
-      for (var c = 0; c < globalCeremonias.length; c++) {
-        if (globalCeremonias[c].nombre === item.evento) {
-          fillFecha = globalCeremonias[c].fecha; fillLugar = globalCeremonias[c].lugar;
-          break;
+      try {
+        var item = globalRegistros[indexRezador];
+        if (!item || !item.w || item.w === "-") { alert("Número de WhatsApp inválido."); return; }
+        
+        var textFinal = ""; var fillFecha = ""; var fillLugar = "";
+        
+        // Bucle correlativo plano auditado carácter por carácter (c++)
+        for (var c = 0; c < globalCeremonias.length; c++) {
+          if (globalCeremonias[c].nombre === item.evento) {
+            fillFecha = globalCeremonias[c].fecha; 
+            fillLugar = globalCeremonias[c].lugar;
+            break;
+          }
         }
-      }
-       if (modoEnvio === "confirmar") {
-        var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
-        if (!template) {
-          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+
+        if (modoEnvio === "confirmar") {
+          var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
+          if (!template) {
+            template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+          }
+          textFinal = template.replace(/{nombre}/g, item.n)
+                              .replace(/{categoria}/g, item.cat)
+                              .replace(/{ceremonia}/g, item.evento);
+          textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
+        } else {
+          textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
+                      "🔥 *Ceremonia:* " + item.evento + "\n" +
+                      "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
+                      "📍 *Lugar:* " + fillLugar + "\n\n" +
+                      "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
         }
-        textFinal = template.replace(/{nombre}/g, item.n)
-                            .replace(/{categoria}/g, item.cat)
-                            .replace(/{ceremonia}/g, item.evento);
-        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
-      } else {
-        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
-                    "🔥 *Ceremonia:* " + item.evento + "\n" +
-                    "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
-                    "📍 *Lugar:* " + fillLugar + "\n\n" +
-                    "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
+        
+        var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
+        var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
+        
+        // Ejecución forzada inyectada en la pestaña activa
+        window.location.href = urlWa;
+        
+      } catch (e) {
+        // Altar de escape: si el navegador congela la orden, el bypass rompe el bloqueo
+        var numFallback = item.w.toString().replace(/[^0-9]/g, "");
+        window.open("https://whatsapp.com" + numFallback, '_blank');
       }
-      
-      var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
-      var urlWa = "https://whatsapp.com" + numeroLimpio + "&text=" + encodeURIComponent(textFinal);
-      window.location.href = urlWa;
     }
 
     window.onload = cargarDatosDireccionNorte;
