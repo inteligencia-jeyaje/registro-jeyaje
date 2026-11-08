@@ -411,7 +411,7 @@
       .then(function() { alert("🗑️ Registro eliminado de forma definitiva."); cargarDatosDireccionNorte(); });
     }
 
-    // J) DISPARADOR DE CONVOCATORIA GENERAL (Notebook Anti-404 y Anti-Bloqueos)
+    // J) DISPARADOR DE CONVOCATORIA GENERAL CON AISLAMIENTO DE PROTOCOLO ESTÁTICO
     function dispararConvocatoriaCeremonia(indexCeremonia) {
       var ev = globalCeremonias[indexCeremonia];
       if (!ev) { alert("Ceremonia no encontrada."); return; }
@@ -423,7 +423,11 @@
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
                               "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
       
-      var urlWa = "https://wa.me" + encodeURIComponent(txtConvocatoria);
+      // 🔒 SOLDADURA ESTÁTICA RÍGIDA: Fuerza la barra oblicua e impide el colapso del navegador en la notebook
+      var prefijoConvocatoria = "https:" + "//" + "wa.me" + "/";
+      var urlWa = prefijoConvocatoria + "?text=" + encodeURIComponent(txtConvocatoria);
+      
+      // Redirección directa en la pestaña activa de tu notebook libre de bloqueos pop-ups
       window.location.href = urlWa;
     }
 
