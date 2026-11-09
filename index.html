@@ -39,7 +39,7 @@
     <div id="status-box"></div>
     <div class="tabs-norte" id="bloque-pestañas-publicas">
       <button class="tab-btn active" id="btn-pub-rezar" onclick="cambiarSeccionPublica('rezar')">👥 Asistentes</button>
-      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">♨️ Sahumadores (Servicio)</button>
+      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">♨️ Sahumadores (En Servicio)</button>
     </div>
     <div id="panel-pub-rezar" class="panel-contenido active">
       <h3>Inscripciones a Ceremonias</h3>
@@ -72,20 +72,20 @@
       <p style="font-size:11px; color:#7f8c8d; text-align:center; margin-top:-8px;">Inscripción exclusiva para Sahumadores que sostienen el Fuego.</p>
       <div class="card-norte" style="border-color: #7d3c98;" id="bloque-autenticacion-sahumador">
         <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #7d3c98;">🔒 Validación Requerida</div>
-        <label>Introduce la Clave de Acceso para Servidores:</label>
+        <label>Introduce la Clave de Acceso para Sahumadores:</label>
         <input type="password" id="claveValidarSahumador" placeholder="Clave entregada por el Encargado">
         <button class="save-btn" style="background-color: #7d3c98; margin-top: 8px;" onclick="validarIngresoFichaSahumador()">Verificar Credenciales 🔑</button>
       </div>
       <div id="formulario-oculto-sahumador" style="display: none;">
         <div class="card-norte" style="border-color: #bb8fce;">
-          <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">👤 Identidad del Servidor</div>
+          <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #bb8fce;">👤 Identidad del (la) Sahumador(a)</div>
           <label>Nombre Completo:</label>
           <input type="text" id="nombreSahumador" placeholder="Ej. Ana María Claros">
           <label>Número de WhatsApp:</label>
           <input type="text" id="telefonoSahumador" placeholder="Ej. 59170000000">
         </div>
         <div class="card-norte" style="border-color: #bb8fce;">
-          <div class="titulo-card" style="color: #bb8fce; border-bottom-color: #bb8fce;">🔮 Intención del Servicio</div>
+          <div class="titulo-card" style="color: #bb8fce; border-bottom-color: #bb8fce;">🔥 Intención del Servicio</div>
           <label>Selecciona la Ceremonia a Servir:</label>
           <select class="combo-ceremonias-clase" id="select-ceremonia-sahumador"></select>
           <label>Condición del Sahumador:</label>
@@ -94,7 +94,7 @@
             <option value="Pájaro Solitario">Pájaro Solitario (Independiente)</option>
           </select>
         </div>
-        <button class="save-btn" style="background-color: #7d3c98;" onclick="ejecutarTransmisionPublicaNorte('Sahumadores')">Sellar Compromiso de Servicio 🔮</button>
+        <button class="save-btn" style="background-color: #7d3c98;" onclick="ejecutarTransmisionPublicaNorte('Sahumadores')">Sellar Compromiso de Servicio 🔥</button>
       </div>
     </div>
     <div class="secret-trigger" onclick="abrirConsolaEncargada()">⚙️</div>
@@ -131,7 +131,7 @@
 
       <div id="panel-admin-convoc" class="panel-contenido">
         <div class="card-norte" style="border-left: 5px solid #16a085;">
-          <div class="titulo-card" style="color:#16a085; border-bottom-color:#16a085;">📢 Convocatorias Generales Dinamientos</div>
+          <div class="titulo-card" style="color:#16a085; border-bottom-color:#16a085;">📢 Convocatorias Generales Dinámicas</div>
           <div id="bloque-ceremonias-vivas"></div>
         </div>
       </div>
@@ -176,7 +176,7 @@
         document.getElementById("bloque-autenticacion-sahumador").style.display = "none";
         document.getElementById("formulario-oculto-sahumador").style.display = "block";
       } else {
-        alert("❌ Clave de Servidor Incorrecta. Solicita la llave al Encargado.");
+        alert("❌ Clave de Sahumador(a) Incorrecta. Solicita la llave al Encargado.");
       }
     }
 
@@ -421,7 +421,7 @@
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
-                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Ven con corazón encedido!";
+                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. https://inteligencia-jeyaje.github.io/registro-jeyaje/ ¡Ven con el corazón encendido!";
       
       // 🔒 SOLDADURA ESTÁTICA RÍGIDA: Fuerza la barra oblicua e impide el colapso del navegador en la notebook
       var prefijoConvocatoria = "https:" + "//" + "wa.me" + "/";
@@ -447,7 +447,7 @@
       if (modoEnvio === "confirmar") {
         var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
         if (!template) {
-          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la Ceremonia de: *{ceremonia}*. ¡Contigo nos unimos en el rezo!";
+          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la Ceremonia de: *{ceremonia}*. ¡Nos unimos contigo en el rezo!";
         }
         textFinal = template.replace(/{nombre}/g, item.n)
                             .replace(/{categoria}/g, item.cat)
