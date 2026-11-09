@@ -172,7 +172,7 @@
     // B) VALIDACIÓN DE LLAVE DE SERVIDORES DESDE EL SHEETS
     function validarIngresoFichaSahumador() {
       var claveInput = document.getElementById("claveValidarSahumador").value;
-      if (claveInput === serverPassS || claveInput === "2009") {
+      if (claveInput === serverPassS || claveInput === "cOpAl") {
         document.getElementById("bloque-autenticacion-sahumador").style.display = "none";
         document.getElementById("formulario-oculto-sahumador").style.display = "block";
       } else {
@@ -248,7 +248,7 @@
     // E) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
       var clave = prompt("Introduce la clave de la Encargada del Norte:");
-      if (clave === serverPassE || clave === "2009") { 
+      if (clave === serverPassE || clave === "chOchIs") { 
         document.getElementById("sec-admin-norte").style.display = "block";
         cargarDatosDireccionNorte();
       } else if (clave !== null) { alert("❌ Clave incorrecta."); }
