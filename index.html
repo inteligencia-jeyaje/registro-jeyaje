@@ -39,11 +39,11 @@
     <div id="status-box"></div>
     <div class="tabs-norte" id="bloque-pestañas-publicas">
       <button class="tab-btn active" id="btn-pub-rezar" onclick="cambiarSeccionPublica('rezar')">👥 Asistentes</button>
-      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">🔮 Sahumadores (Servicio)</button>
+      <button class="tab-btn" id="btn-pub-sahumar" onclick="cambiarSeccionPublica('sahumar')">♨️ Sahumadores (Servicio)</button>
     </div>
     <div id="panel-pub-rezar" class="panel-contenido active">
       <h3>Inscripciones a Ceremonias</h3>
-      <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-top:-8px;">Registra tu asistencia para sostener el fuego sagrado de la Tribu.</p>
+      <p style="font-size:12px; color:#7f8c8d; text-align:center; margin-top:-8px;">Registra tu asistencia para elevar el rezo en la Tribu.</p>
       <div class="card-norte">
         <div class="titulo-card">👤 Ficha de Identidad</div>
         <label>Nombre Completo:</label>
@@ -52,10 +52,10 @@
         <input type="text" id="telefono" placeholder="Ej. 59170000000">
       </div>
       <div class="card-norte">
-        <div class="titulo-card">🔥 Altar y Ceremonia</div>
+        <div class="titulo-card">🔥 Templo y Ceremonia</div>
         <label>Selecciona la Ceremonia a Asistir:</label>
         <select class="combo-ceremonias-clase" id="select-ceremonia-dinamica"></select>
-        <label>Condición en el Altar:</label>
+        <label>Condición en la Ceremonia:</label>
         <select id="tipoParticipante" onchange="document.getElementById('invitado-por-row').style.display=this.value==='Invitado Nuevo'?'block':'none'">
           <option value="Miembro de Comunidad Jeyajé">Miembro de Comunidad Jeyajé</option>
           <option value="Invitado Nuevo">Invitado Nuevo (Primera vez)</option>
@@ -65,11 +65,11 @@
           <input type="text" id="invitadoPorPersona" placeholder="Ej. Ana María Claros">
         </div>
       </div>
-      <button class="save-btn" onclick="ejecutarTransmisionPublicaNorte('Rezadores')">Enviar Mi Inscripción al Altar 🔥</button>
+      <button class="save-btn" onclick="ejecutarTransmisionPublicaNorte('Rezadores')">Enviar Mi Inscripción 🪪</button>
     </div>
     <div id="panel-pub-sahumar" class="panel-contenido">
-      <h3 style="color: #7d3c98;">Registro de Servidores Altar</h3>
-      <p style="font-size:11px; color:#7f8c8d; text-align:center; margin-top:-8px;">Inscripción exclusiva para Sahumadores que sostienen el fuego.</p>
+      <h3 style="color: #7d3c98;">Registro de Portadores de Fuego</h3>
+      <p style="font-size:11px; color:#7f8c8d; text-align:center; margin-top:-8px;">Inscripción exclusiva para Sahumadores que sostienen el Fuego.</p>
       <div class="card-norte" style="border-color: #7d3c98;" id="bloque-autenticacion-sahumador">
         <div class="titulo-card" style="color: #7d3c98; border-bottom-color: #7d3c98;">🔒 Validación Requerida</div>
         <label>Introduce la Clave de Acceso para Servidores:</label>
@@ -120,11 +120,11 @@
         <div class="card-norte" style="border-left: 5px solid #2980b9;">
           <div class="titulo-card" style="color:#2980b9; border-bottom-color:#2980b9;">➕ Publicar Nueva Ceremonia en Cartelera</div>
           <label>Nombre de la Ceremonia:</label>
-          <input type="text" id="crear-ev-nombre" placeholder="Ej. Ceremonia de Luna Llena">
-          <label>Fecha y Hora del Altar:</label>
+          <input type="text" id="crear-ev-nombre" placeholder="Ej. Ceremonia de la Pachamama">
+          <label>Fecha y Hora del Ceremonia:</label>
           <input type="text" id="crear-ev-fecha" placeholder="Ej. Sábado 14 de Noviembre - 19:30">
           <label>Lugar / Ubicación Geográfica:</label>
-          <input type="text" id="crear-ev-lugar" placeholder="Ej. Templo del Norte, Av. Paraguá y 4to Anillo">
+          <input type="text" id="crear-ev-lugar" placeholder="Ej. Templo de Jeyajé, Av. Paraguá y 4to Anillo">
           <button class="save-btn" style="background-color:#2980b9;" onclick="ejecutarAsientoNuevaCeremonia()">Inaugurar Ceremonia en la Red 🔒</button>
         </div>
       </div>
@@ -210,7 +210,7 @@
       if (!nombre.trim() || !telf.trim()) { alert("Por favor ingresa tu nombre y número de WhatsApp."); return; }
       if (!evento) { alert("Por favor selecciona una ceremonia activa de la lista."); return; }
       
-      avisarEstado("Sincronizando con el Altar del Norte...");
+      avisarEstado("Sincronizando con la Dirección del Norte...");
 
       var datos = {
         target_sheet: "Rezadores",
@@ -247,7 +247,7 @@
 
     // E) FILTRO DE ENTRADA EXCLUSIVO ENCARGADA
     function abrirConsolaEncargada() {
-      var clave = prompt("Introduce la clave de la Encargada del Norte:");
+      var clave = prompt("Introduce la clave del (la) Encargado(a) del Norte:");
       if (clave === serverPassE || clave === "chOchIs") { 
         document.getElementById("sec-admin-norte").style.display = "block";
         cargarDatosDireccionNorte();
@@ -304,7 +304,7 @@
                 var ev = globalCeremonias[c];
                 var divC = document.createElement("div");
                 divC.className = "ceremonia-card-norte";
-                divC.innerHTML = "<b>🔥 Altar:</b> " + ev.nombre + "<br>" +
+                divC.innerHTML = "<b>🔥 Ceremonia:</b> " + ev.nombre + "<br>" +
                                 "<b>🗓️ Fecha:</b> " + ev.fecha + "<br>" +
                                 "<b>📍 Lugar:</b> " + ev.lugar + "<br>" +
                                 '<button class="wa-send-btn" style="background-color:#16a085; margin-top:6px;" onclick="dispararConvocatoriaCeremonia(' + c + ')">📢 Compartir Convocatoria General</button>';
@@ -331,7 +331,7 @@
           
           if (listaBox) {
             if (globalRegistros.length === 0) {
-              listaBox.innerHTML = "<p style='font-size:12px; color:#a0a5aa;'>No hay voces registradas en esta luna.</p>";
+              listaBox.innerHTML = "<p style='font-size:12px; color:#a0a5aa;'>No hay participantes registrados en esta fecha.</p>";
               return;
             }
             listaBox.innerHTML = "";
@@ -383,12 +383,12 @@
       
       var txt = "🔥 *LISTA DE ASISTENCIA: " + evSeleccionado.toUpperCase() + "* 🔥\n";
       txt += "----------------------------------------\n\n";
-      txt += "🔮 *SAHUMADORES (Servicio):*\n";
-      if (arrayServidores.length === 0) txt += "   _Sin servidores asignados aún_\n";
+      txt += "♨️ *SAHUMADORES (En Servicio):*\n";
+      if (arrayServidores.length === 0) txt += "   _Sin Sahumadores registrados aún_\n";
       for (var s = 0; s < arrayServidores.length; s++) { txt += "   " + (s + 1) + ". " + arrayServidores[s] + "\n"; }
       
       txt += "\n👥 *ASISTENTES REGISTRADOS:*\n";
-      if (arrayAsistentes.length === 0) txt += "   _Sin participantes inscritos aún_\n";
+      if (arrayAsistentes.length === 0) txt += "   _Sin asistentes inscritos aún_\n";
       for (var a = 0; a < arrayAsistentes.length; a++) { txt += "   " + (a + 1) + ". " + arrayAsistentes[a] + "\n"; }
       txt += "\n----------------------------------------\n🎯 _Tribu Jeyajé Arco Iris_";
       
@@ -417,11 +417,11 @@
       if (!ev) { alert("Ceremonia no encontrada."); return; }
       
       var txtConvocatoria = "✨ *CONVOCATORIA TRIBAL - TRIBU JEYAJÉ ARCO IRIS* ✨\n\n" +
-                              "Hermanos, nos encontramos para unificar el rezo en el próximo altar del Aire:\n" +
+                              "Hermanos, nos encontramos para unificar el rezo en la próxima Ceremonia:\n" +
                               "🔥 *Ceremonia:* " + ev.nombre + "\n" +
                               "🗓️ *Fecha y Hora:* " + ev.fecha + "\n" +
                               "📍 *Lugar:* " + ev.lugar + "\n\n" +
-                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Tu voz sostiene el fuego!";
+                              "Por favor, confirma tu asistencia registrándote en nuestra aplicación oficial. ¡Ven con corazón encedido!";
       
       // 🔒 SOLDADURA ESTÁTICA RÍGIDA: Fuerza la barra oblicua e impide el colapso del navegador en la notebook
       var prefijoConvocatoria = "https:" + "//" + "wa.me" + "/";
@@ -447,24 +447,24 @@
       if (modoEnvio === "confirmar") {
         var template = (item.cat === "Invitado Nuevo") ? pAsistente : pStaff;
         if (!template) {
-          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la ceremonia de: *{ceremonia}*. ¡Tu voz expande el rezo!";
+          template = "¡Hola *{nombre}*! 🌀 Confirmamos tu registro para la Ceremonia de: *{ceremonia}*. ¡Contigo nos unimos en el rezo!";
         }
         textFinal = template.replace(/{nombre}/g, item.n)
                             .replace(/{categoria}/g, item.cat)
                             .replace(/{ceremonia}/g, item.evento);
-        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Altar designado");
+        textFinal += "\n\n🗓️ *Fecha:* " + (fillFecha || "Fecha programada") + "\n📍 *Lugar:* " + (fillLugar || "Templo designado");
       } else {
-        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este tierno recordatorio para nuestro próximo encuentro en el círculo:\n" +
+        textFinal = "¡Hola *" + item.n + "*! 🌀 Te enviamos este breve recordatorio para nuestro próximo encuentro en la ceremonia:\n" +
                     "🔥 *Ceremonia:* " + item.evento + "\n" +
                     "🗓️ *Fecha y Hora:* " + fillFecha + "\n" +
                     "📍 *Lugar:* " + fillLugar + "\n\n" +
-                    "Tu presencia sostiene el fuego de la Tribu. ¡Nos vemos en el altar! ✨";
+                    "Tu presencia expande el Fuego de la Tribu. ¡Nos vemos en la Ceremonia! 🕯️";
       }
       
       // 🔒 FILTRADO EXTREMO: Extrae única y exclusivamente los dígitos numéricos borrando textos pegados
       var numeroLimpio = item.w.toString().replace(/[^0-9]/g, "");
       
-      // 🔒 ESTRUCTURA ESTÁTICA PLANA SERRADA: Obliga al navegador a inyectar el protocolo completo y la barra divisoria
+      // 🔒 ESTRUCTURA ESTÁTICA PLANA CERRADA: Obliga al navegador a inyectar el protocolo completo y la barra divisoria
       var prefijoSeguro = "https:" + "//" + "wa.me" + "/";
       var urlWa = prefijoSeguro + numeroLimpio + "?text=" + encodeURIComponent(textFinal);
       
