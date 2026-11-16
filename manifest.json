@@ -1,0 +1,16 @@
+{
+  "name": "Tribu Jeyajé Arco Iris",
+  "short_name": "Tribu Jeyajé",
+  "description": "Inscripciones a Ceremonias",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#b45309",
+  "icons": [
+    {
+      "src": "icono.png?v=1",
+      "sizes": "500x500",
+      "type": "image/png"
+    }
+  ]
+}
